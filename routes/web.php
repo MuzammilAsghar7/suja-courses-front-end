@@ -3,7 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\HTTP\Controllers\AuthController;
 use App\HTTP\Controllers\ModuleController;
+use App\HTTP\Controllers\CourseController;
+use App\HTTP\Controllers\LessonController;
 use App\Models\Module;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,11 +38,11 @@ use App\Models\Module;
 
 // }
 
-Route::get('/', [ModuleController::class,'index']);
-Route::view('/forgot-passwaord', 'pages.forgot-password');
-Route::view('/login', 'pages.login');
-Route::view('/register', 'pages.registration');
 
+Route::view('/forgot-passwaord', 'pages.forgot-password');
+Route::get('/login', [AuthController::class,'loginView'])->name('login');
+Route::post('/login', [AuthController::class,'index']);
+Route::view('/register', 'pages.registration');
 
 // Site Pages
 // Route::get('/theory', function()
@@ -49,7 +53,11 @@ Route::view('/register', 'pages.registration');
 // Route::get('/theory', [AuthController::class,'showusers'])->name('theory');
 
 
-// Post Methods
-Route::post('/login', [AuthController::class,'index']);
-Route::post('/register', [AuthController::class,'store']);
-Route::post('/logout', [AuthController::class,'logout'])->name('logout');
+Route::middleware(['auth'])->group(function () {
+  Route::get('/', [ModuleController::class,'index'])->name('home');
+  Route::post('/register', [AuthController::class,'store']);
+  Route::post('/logout', [AuthController::class,'logout'])->name('logout');
+  Route::get('/getting-started/{id}', [ModuleController::class,'chapters'])->name('chapters');
+  Route::get('/theory/{id}', [ModuleController::class,'chapters'])->name('chapters');
+  Route::get('/getting-started/{chapter_id}/{lesson_id}', [LessonController::class,'lessons'])->name('lessons.show');
+});

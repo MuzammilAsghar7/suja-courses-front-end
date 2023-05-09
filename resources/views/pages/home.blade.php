@@ -2,49 +2,43 @@
 
 @section('content')
 
-@if (session('success'))
-      <div class="alert alert-success">
-         {!! session('success') !!}
-      </div>
-@endif
 <section id="main" class="wrap pt-4">
         <section>
             <div class="container">
                 <div class="row align-items-center">
+                @if (session('success'))
+                  <div class="col-md-7 mx-auto">
+                    <div class="alert alert-success">
+                        {!! session('success') !!}
+                    </div>
+                  </div>
+                @endif
                     <div class="col-md-7 mx-auto">
                         <div class="progress-chart -center incomplete">
                             <span class="progress-chart__text">0/0</span>
                         </div>
-                        <!-- /.progress-chart -->
                     </div>
-                    <!-- /.col-lg-12 -->
-                </div>
-                <!-- /.row -->
+                  </div>
                 <div class="row align-items-center">
                     <div class="col-md-7 mx-auto">
                         <div class="text-center">
                             <span class="reporting__text -low u-block u-mt1 u-mb1">You are not ready yet. More work
                                 needed.</span>
                         </div>
-                        <!-- /.text-center -->
                     </div>
-                    <!-- /.col-lg-12 -->
                 </div>
-                <!-- /.row -->
             </div>
-            <!-- /.container -->
         </section>
 
 
         <div class="page">
         	
           @foreach($modules as $module)
-           <!-- // row // -->
         	 <section>
                 <div class="container">
                     <div class="row align-items-center">
                         <div class="col-md-7 mx-auto">
-                            <a class="page-list__link" href="{{$module->name}}">
+                            <a class="page-list__link" href="{{$module->name}}/{{$module->id}}">
                                 <div class="row align-items-center">
                                     <div class="col-lg-2">
                                         <i class="page-list__icon {{$module->icon}}"></i>
@@ -67,10 +61,8 @@
                     </div>
                 </div>
             </section>
-            	<!-- // row // -->
             @endforeach
 
-        	<!-- // row // -->
         	 <section class="d-none">
                 <div class="container">
                     <div class="row align-items-center">
@@ -97,10 +89,8 @@
                         </div>
                     </div>
                 </div>
-            </section>
-        	<!-- // row // -->           
+            </section>        
         </div>
-        <!-- /.page -->
     </section>
 
 <!-- <div class="container d-none">

@@ -1,14 +1,30 @@
 <header class="site-header">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-xs-3 col-sm-2 col-md-2 col-lg-2"></div>
-                <!-- /.col-lg-3 -->
-            <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
+                <div class="col-xs-3 col-sm-2 col-md-2 col-lg-2">
+                @if(request()->is('getting-started/*') || request()->is('theory/*')) 
+                   <a class="header-icon u-mr1" href="/">
+                        <i class="fa fa-home" style="font-size: 26px;"></i>
+                    </a>
+                    <a class="header-icon -back" href="{{ url()->previous() }}">
+                            <i class=" fa fa-chevron-left"></i>
+                        <span>&nbsp; Back</span>
+                    </a>
+                @endif
+                </div>
+                <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
                 <div class="text-center">
-                    <span class="page__title"> Home </span>
+                @if(request()->is('getting-started/*')) 
+                  <span class="page__title"> Getting Started  </span>
+                @elseif(request()->is('theory/*'))
+                  <span class="page__title"> Theory </span>
+                @else
+                  <span class="page__title"> Home </span>
+                @endif
+
+                    
                 </div>
             </div>
-            <!-- /.col-lg-6 -->
             <div class="col-xs-3 col-sm-10 col-md-3 col-lg-2">
                 <span class="toggle-button">
                     <div class="menu-bar menu-bar-top"></div>
@@ -31,6 +47,7 @@
         <!-- /.overlay-content -->
     </div>
     <!-- /.overlay -->
+
 
     <div class="menu-wrap">
         <div class="menu-sidebar">
@@ -89,7 +106,7 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="company-logo text-center">
-                        <img src="_assets/img/logo.png">
+                        <img src="{{asset('_assets/img/logo.png')}}">
                     </div>
                     <!-- <div class="company-brand -brand-1"></div> -->
                 </div>

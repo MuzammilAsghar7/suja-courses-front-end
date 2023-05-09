@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\chapter;
+use App\Models\course;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorechapterRequest;
 use App\Http\Requests\UpdatechapterRequest;

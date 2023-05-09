@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('qtype_qusetion', function (Blueprint $table) {
+        Schema::create('qtype_question', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('question_id');
             $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade')->onUpdate('cascade');
-            $table->unsignedBigInteger('question_type');
-            $table->foreign('question_type')->references('id')->on('qtypes')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedBigInteger('qtype_id');
+            $table->foreign('qtype_id')->references('id')->on('qtypes')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('qtype_qusetion');
+        Schema::dropIfExists('qtype_question');
     }
 };

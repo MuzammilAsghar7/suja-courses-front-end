@@ -115,9 +115,9 @@
                 $menuWrap.toggleClass('menu-show');
             });
 
-            $('.chart').easyPieChart({
+            //$('.chart').easyPieChart({
                 // Your configuration goes here
-            });
+            //});
 
             // Overlay
             $('.quick-nav').on('click', function () {

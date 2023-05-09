@@ -8,6 +8,7 @@ use App\HTTP\Controllers\AuthController;
 use App\HTTP\Controllers\ModuleController;
 use App\HTTP\Controllers\QuestionController;
 use App\HTTP\Controllers\LessonController;
+use App\HTTP\Controllers\ConfigController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +33,9 @@ Route::middleware('auth:api')->group( function () {
   
 });
 
+Route::get('/config',[ConfigController::class,'index']);
+
+
 Route::get('/modules',[ModuleController::class,'get_modules']);
 Route::get('/chapters', [ChapterController::class,'index']);
 Route::get('/questions', [QuestionController::class,'index']);
@@ -45,6 +49,7 @@ Route::post('/add-lesson', [LessonController::class,'store']);
 Route::get('/questions', [QuestionController::class,'index']);
 Route::get('/questions/{id}', [QuestionController::class,'show']);
 Route::put('/questions/{id}', [QuestionController::class,'update']);
+Route::post('/add-question', [QuestionController::class,'store']);
 
 
 Route::post('/add-lesson', [LessonController::class,'store']);

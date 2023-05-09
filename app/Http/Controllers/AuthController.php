@@ -95,22 +95,6 @@ class AuthController extends Controller
         } 
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
-
     public function showusers()
     {
         $users = User::get();
@@ -121,6 +105,14 @@ class AuthController extends Controller
     {
         return redirect('login')->with(Auth::logout())->withSuccess('You have logged out');
     }
-    
+
+    public function loginView()
+    {
+        if(Auth::check()){
+            return redirect('/');
+        }
+        return View('pages/login');
+    }
+
 
 }

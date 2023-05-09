@@ -7,6 +7,7 @@ use App\Http\Requests\StorequestionRequest;
 use App\Http\Requests\UpdatequestionRequest;
 use Illuminate\Http\Request;
 use Validator;
+use App\Helpers\ValidationHelper;
 
 class QuestionController extends Controller
 {
@@ -34,18 +35,17 @@ class QuestionController extends Controller
     public function store(Request $request)
     {
 
+        // return $request->lesson_id;
         $validator = Validator::make($request->all(), [
             'title' => 'required|max:100|unique:questions',
-            'chapter_id' => 'required',
             'type' => 'required', 
-            'content' => 'required',
         ]);
         if ($validator->fails()) {
-            $errors = $validator->errors();
+             $errors = ValidationHelper::getValidationErrors($validator->errors());
             return response()->json(
                 [
                     'status' => false,
-                    'error' => $validator->errors(),
+                    'errors' => $errors
                 ], 200);
         }
         
@@ -54,7 +54,8 @@ class QuestionController extends Controller
              "content" => $request->content,
          ]);
 
-
+         $qustion->lesson()->attach($request->lesson_id);
+         $qustion->qtype()->attach($request->type);
         //$file = $request->file()['file'];
 
          return response()->json(['status'=>true,'question' => $qustion], 200);

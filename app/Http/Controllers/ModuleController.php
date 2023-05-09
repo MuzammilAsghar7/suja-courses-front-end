@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Module;
+use Illuminate\Support\Facades\DB;
 
 
 class ModuleController extends Controller
@@ -67,11 +68,24 @@ class ModuleController extends Controller
     }
 
     // api classess
-
     public function get_modules()
     {  
         $modules = Module::all();   
         return response()->json($modules, 200);
 
     }
+
+    public function chapters($id)
+    {
+        $course = Module::where('id', $id)
+        ->withCount('chapters')
+        ->with(['chapters' => function ($query) {
+            $query->withCount('lessons');
+        }])
+        ->get()
+        ->first();
+        // dd($course->toArray()); 
+        return View('pages/chapters/index',['course' => $course]);
+    }
+
 }

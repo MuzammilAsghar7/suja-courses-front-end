@@ -20,6 +20,12 @@ class question extends Model implements HasMedia
             ->fit(Manipulations::FIT_CROP, 300, 300)
             ->nonQueued();
     }
+    public function lesson(){
+        return $this->belongsToMany(lesson::class);
+    }
+    public function qtype(){
+        return $this->belongsToMany(qtype::class);
+    }
 
 }
 

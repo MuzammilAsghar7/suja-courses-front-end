@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\lesson;
+use App\Models\chapter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorelessonRequest;
 use App\Http\Requests\UpdatelessonRequest;
@@ -65,7 +66,8 @@ class LessonController extends Controller
     public function show($id)
     {
         // return $id;
-        $lessons = Lesson::all();
+        $chapter = Chapter::find($id);
+        $lessons = $chapter->lessons;
         return response()->json(
             [
                 'status' => true,
@@ -115,6 +117,22 @@ class LessonController extends Controller
     public function add($request)
     {
         
+    }
+    public function lessons($chapter_id,$lesson_id)
+    {
+        $page_number = $lesson_id;
+        $limit = 1; 
+        $chapter = Chapter::where('id', $chapter_id)->first();
+        $lessons = $chapter->lessons()
+            ->skip(($page_number - 1) * $limit)
+            ->take($limit)
+            ->first();
+        $chapter['lesson'] = $lessons;
+        if($lessons == null){
+            return redirect()->route('home');
+        }
+        // dd($chapter->toArray());
+        return view('pages/lessons/index', ['chapter'=>$chapter,'page'=>$page_number,'has_pagination' => true]);
     }
 
 }
