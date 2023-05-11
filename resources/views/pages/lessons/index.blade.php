@@ -1,5 +1,7 @@
 @extends('layouts.default')
 
+
+
 @section('content')
 
 
@@ -38,6 +40,12 @@ https://player.vimeo.com/external/267992569.sd.mp4?s=49d1618383afccfce3cf5908c9b
   </div>
 </section>
 
+<!-- @if($chapter['lesson']->id == $chapter['last_lesson_id'])
+  @section('page_number', 'last')
+@else
+  @section('page_number', ( $page + 1))
+@endif -->
+
 <section>
   <div class="container">
     <div class="row">
@@ -55,74 +63,29 @@ https://player.vimeo.com/external/267992569.sd.mp4?s=49d1618383afccfce3cf5908c9b
 </section>
 
 <section>
-  <div class="container">
-    <div class="row u-mt2 u-mb2">
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div class="checkbox-area u-mt1">
-          <div class="checkbox">
-            <div class="fs-checkbox fs-light  fs-checkbox-checked">
-              <div class="fs-checkbox-marker" aria-hidden="true">
-                <div class="fs-checkbox-flag"></div>
-                <input class="custom-checkbox section-read fs-checkbox-element" type="checkbox" value="" checked="checked">
-              </div>
-              <label class="fs-checkbox-label">
-                <span class="fs-checkbox-element_placeholder"></span> I confirm that I have completed the required learning tasks covered on this page </label>
+@foreach($chapter['lesson']->questions as $question)
+<div class="container">
+  <div class="row u-mt2 u-mb2">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="checkbox-area u-mt1">
+        <div class="checkbox">
+          <div class="fs-checkbox fs-light  fs-checkbox-checked">
+            <div class="fs-checkbox-marker" aria-hidden="true">
+              <div class="fs-checkbox-flag"></div>
+              <input class="custom-checkbox section-read fs-checkbox-element" type="checkbox" value="" checked="checked">
             </div>
+            <label class="fs-checkbox-label">
+              <span class="fs-checkbox-element_placeholder"></span> {{$question->title}} </label>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
+@endforeach
+  
 </section>
 @endisset
 
 </div>
-
-<div class="question-footer">
-  <div class="container">
-    <div class="row">
-      <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-        <div class="text-left">
-          <a class="started-back" href="0">
-            <i class="fa fa-chevron-left"></i>
-            <span class="desktop">Back</span>
-          </a>
-          <!-- /.started-back -->
-        </div>
-      </div>
-      <!-- /.col-lg-4 -->
-      <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-        <div class="text-center">
-          <a class="question-nav -show quick-nav" href="#">
-            <span class="desktop">Quick navigation</span>
-            <span class="fa fa-chevron-up"></span>
-          </a>
-        </div>
-        <!-- /.text-left -->
-      </div>
-      <!-- /.col-lg-4 -->
-      <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-        <div class="text-right">
-          <div class="next-button">
-            <div class="text-right">
-              <a class="started-back" href="https://my-adi-course.co.uk/getting-started/3/0">
-                <span class="desktop">Next Unit</span>
-                <i class="fa fa-chevron-right"></i>
-              </a>
-              <!-- /.started-back -->
-            </div>
-            <!-- /.pull-right -->
-          </div>
-          <!-- /.next-button -->
-        </div>
-        <!-- /.text-right -->
-      </div>
-      <!-- /.col-lg-4 -->
-    </div>
-    <!-- /.row -->
-  </div>
-  <!-- /.container -->
-</div>
-
-
 @endsection

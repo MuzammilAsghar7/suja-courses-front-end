@@ -57,7 +57,7 @@ Route::middleware(['auth'])->group(function () {
   Route::get('/', [ModuleController::class,'index'])->name('home');
   Route::post('/register', [AuthController::class,'store']);
   Route::post('/logout', [AuthController::class,'logout'])->name('logout');
-  Route::get('/getting-started/{id}', [ModuleController::class,'chapters'])->name('chapters');
-  Route::get('/theory/{id}', [ModuleController::class,'chapters'])->name('chapters');
+  Route::get('/{name}/{id}', [ModuleController::class,'chapters'])->name('chapters');
+  // Route::get('/theory/{id}', [ModuleController::class,'chapters'])->name('chapters');
   Route::get('/getting-started/{chapter_id}/{lesson_id}', [LessonController::class,'lessons'])->name('lessons.show');
 });

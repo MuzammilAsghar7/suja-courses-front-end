@@ -26,6 +26,6 @@ class question extends Model implements HasMedia
     public function qtype(){
         return $this->belongsToMany(qtype::class);
     }
-
+    
 }
 

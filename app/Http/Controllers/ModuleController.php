@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Module;
 use Illuminate\Support\Facades\DB;
-
+use Session;
 
 class ModuleController extends Controller
 {
@@ -75,16 +75,17 @@ class ModuleController extends Controller
 
     }
 
-    public function chapters($id)
+    public function chapters($name, $id)
     {
+        Session::put('module_name', $name);
+
         $course = Module::where('id', $id)
         ->withCount('chapters')
         ->with(['chapters' => function ($query) {
             $query->withCount('lessons');
         }])
-        ->get()
         ->first();
-        // dd($course->toArray()); 
+
         return View('pages/chapters/index',['course' => $course]);
     }
 

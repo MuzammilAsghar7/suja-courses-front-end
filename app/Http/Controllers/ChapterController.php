@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\chapter;
 use App\Models\course;
+use App\Models\qoptions;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorechapterRequest;
 use App\Http\Requests\UpdatechapterRequest;
@@ -20,6 +21,11 @@ class ChapterController extends Controller
         return response()->json($courses, 200);
     }
 
+    public function options()
+    {
+        $options = qoptions::all();
+        return response()->json($options, 200);
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -104,5 +110,32 @@ class ChapterController extends Controller
              "description" => $request->description,
          ]);
          return response()->json(['status'=>true,'course' => $course], 200);
-     }
+    }
+
+
+    public function create_option(Request $request)
+     {  
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|max:100',
+        ]);
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            return response()->json(
+                [
+                    'status' => false,
+                    'error' => $validator->errors(),
+                ], 200);
+        }
+        
+         $option = qoptions::create([
+             'title' => $request->title,
+         ]);
+         
+    }
+
+    public function delete_option(Request $request)
+     {  
+        $res = qoptions::where('id',$request->id)->delete();
+        return response()->json(['status'=>true], 200);
+    }
 }

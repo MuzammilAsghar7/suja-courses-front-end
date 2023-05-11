@@ -34,7 +34,7 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-
+        return $request['mcqs'];
         // return $request->lesson_id;
         $validator = Validator::make($request->all(), [
             'title' => 'required|max:100|unique:questions',

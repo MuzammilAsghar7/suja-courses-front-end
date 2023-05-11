@@ -12,4 +12,8 @@ class lesson extends Model
     public function chapter(){
         return $this->belongsToMany(chapter::class);
     }
+
+    public function questions(){
+        return $this->belongsToMany(question::class);
+    }
 }

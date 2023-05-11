@@ -58,5 +58,8 @@ Route::post('/create-question', [QuestionController::class,'store']);
 
 Route::get('/chapters/{id}/lessons', [LessonController::class,'show']);
 
+Route::post('/create-option', [ChapterController::class,'create_option']);
+Route::post('/delete-option', [ChapterController::class,'delete_option']);
+Route::get('/options', [ChapterController::class,'options']);
 
 

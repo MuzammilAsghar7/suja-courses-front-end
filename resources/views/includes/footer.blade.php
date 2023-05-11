@@ -1,4 +1,17 @@
 
+<?php
+
+if(isset($chapter) && isset($chapter['lesson']->id)){
+	if($chapter['lesson']->id == $chapter['last_lesson_id']){
+		$pagenumber = 'last';
+		$nextchapter = $chapter['next_chapter'];
+	} else{
+		$pagenumber = $page + 1;
+		$chapter = $chapter->id;
+	}
+
+}
+?>
 
 
 @if(isset($has_pagination)) 
@@ -13,10 +26,24 @@
         <div class="text-right">
           <div class="next-button">
             <div class="text-right">
-              <a class="started-back" href="/getting-started/1/{{ $page+1 }}">
-                <span class="desktop">Next Unit</span>
-                <i class="fa fa-chevron-right"></i>
-              </a>
+				@if($pagenumber == 'last')
+					@if($nextchapter == 'finish')
+						<a class="started-back" href="/getting-started/1/">
+							<span class="desktop">Geeting Started</span>
+							<i class="fa fa-chevron-right"></i>
+						</a>
+					@else
+						<a class="started-back" href="/{{session('module_name')}}/{{$nextchapter}}/1">
+							<span class="desktop">Next Unit</span>
+							<i class="fa fa-chevron-right"></i>
+						</a>
+					@endif
+				@else
+					<a class="started-back" href="/{{session('module_name')}}/{{$chapter}}/{{$pagenumber}}">
+						<span class="desktop">Next </span>
+						<i class="fa fa-chevron-right"></i>
+					</a>
+				@endif
             </div>
           </div>
         </div>

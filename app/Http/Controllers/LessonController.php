@@ -120,18 +120,38 @@ class LessonController extends Controller
     }
     public function lessons($chapter_id,$lesson_id)
     {
+        // dd($chapter_id);
         $page_number = $lesson_id;
         $limit = 1; 
-        $chapter = Chapter::where('id', $chapter_id)->first();
-        $lessons = $chapter->lessons()
+        $chapter = Chapter::where('id', $chapter_id)->whereHas('lessons')->first();
+
+        $nextchapter = Chapter::select('id')->where('id', '>', $chapter_id)->whereHas('lessons')->first();
+
+        if($nextchapter){
+            $nextchap_id = $nextchapter->id;
+        } else{
+            $nextchap_id = 'finish';
+        }
+        
+
+        if($chapter){
+            $lessons = $chapter->lessons()
             ->skip(($page_number - 1) * $limit)
             ->take($limit)
             ->first();
-        $chapter['lesson'] = $lessons;
-        if($lessons == null){
-            return redirect()->route('home');
+            $chapter['lesson'] = $lessons;
+            $chapter['last_lesson_id'] = $chapter->lessons->last()->id;
+            $chapter['next_chapter'] = $nextchap_id;
+        } 
+        else{
+            return redirect("/getting-started/$nextchap_id/1");
         }
-        // dd($chapter->toArray());
+        
+
+        // if($lessons == null){
+        //     return redirect()->route('home');
+        // }
+        
         return view('pages/lessons/index', ['chapter'=>$chapter,'page'=>$page_number,'has_pagination' => true]);
     }
 
