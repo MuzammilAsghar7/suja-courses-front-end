@@ -2,9 +2,38 @@
 
 @section('content')
 
-<div class="page">
-
+<div class="page" style="padding-bottom: 50px;">
 @isset($course->chapters)
+
+<section class="u-pt0 py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="text-center">
+          <div class="progress-chart -center incomplete">
+            <span class="progress-chart__text">80/80</span>
+          </div>
+          <!-- /.progress-chart -->
+        </div>
+        <!-- /.text-center -->
+      </div>
+      <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="text-center">
+          <span class="reporting__text -low u-block u-mt1 u-mb1">You are not ready yet. More work needed.</span>
+        </div>
+        <!-- /.text-center -->
+      </div>
+      <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.container -->
+</section>
+
 @foreach($course->chapters as $chapter)
 <section>
     <div class="container">

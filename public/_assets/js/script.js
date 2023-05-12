@@ -536,9 +536,11 @@
             });
 
             // Getting Started Pages
+            var user_id = $('.user_id').val();
             var module_id = $('.module_id').val();
             var chapter_id = $('.chapter_id').val();
             var lesson_id = $('.lesson_id').val();
+            var question_id = $('.question_id').val();
 
             // Read Sections..
             $('.section-read').on('click', function () {
@@ -558,7 +560,7 @@
                     $.ajax({
                         type: 'POST',
                         url: '/api/page/mark-read',
-                        data: { _token: token, module_id, chapter_id, lesson_id },
+                        data: { _token: token, user_id,module_id, chapter_id, lesson_id,question_id },
                         success: function success(data) {
                             // Do Nothing...
                         }

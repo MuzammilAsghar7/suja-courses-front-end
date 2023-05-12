@@ -1,10 +1,8 @@
 @extends('layouts.default')
-
-
-
 @section('content')
 
 <div class="page getting-started">
+
 @isset($chapter)
 @php 
    $module_id = $chapter->module_id; 
@@ -57,7 +55,14 @@ https://player.vimeo.com/external/267992569.sd.mp4?s=49d1618383afccfce3cf5908c9b
 </section>
 
 <section>
-@foreach($chapter['lesson']->questions as $question)
+
+
+@if(isset($chapter['lesson']->questions[0]))
+@php 
+  $question = $chapter['lesson']->questions[0];
+  $question_id = $question->id;
+@endphp
+
 <div class="container">
   <div class="row u-mt2 u-mb2">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -76,15 +81,16 @@ https://player.vimeo.com/external/267992569.sd.mp4?s=49d1618383afccfce3cf5908c9b
     </div>
   </div>
 </div>
-@endforeach
-  
+@endif
 </section>
 <!-- Populate Hidden Fields -->
 <input type="hidden" class="user_id" value="{{ auth()->user()->id }}">
 <input type="hidden" class="module_id" value="{{ $module_id }}">
 <input type="hidden" class="chapter_id" value="{{ $chapter_id }}">
 <input type="hidden" class="lesson_id" value="{{ $lesson_id }}">
-<input type="hidden" class="question_id" value="{{ $lesson_id }}">
+@if(isset($question_id))
+ <input type="hidden" class="question_id" value="{{ $question_id }}">
+@endif
 @endisset
 </div>
 @endsection

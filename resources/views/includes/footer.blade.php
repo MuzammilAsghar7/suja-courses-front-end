@@ -60,7 +60,7 @@ if(isset($chapter) && isset($chapter['lesson']->id)){
             		<div class="row">
 		                <div class="col-sm-3 col-md-3 col-lg-3">
 		                    <div class="text-center">
-		                        <a class="footer-icon" href="index.html">
+		                        <a class="footer-icon" href="/">
 		                            <span class="footer-icon__icon fa fa-home"></span>
 		                            <span class="footer-icon__text t-white u-block text-uppercase">Home</span>
 		                        </a>
@@ -68,7 +68,7 @@ if(isset($chapter) && isset($chapter['lesson']->id)){
 		                </div>
 		                <div class="col-sm-3 col-md-3 col-lg-3">
 		                    <div class="text-center">
-		                        <a class="footer-icon" href="Theory.html">
+		                        <a class="footer-icon" href="/theory">
 		                            <span class="footer-icon__icon fa fa-leanpub"></span>
 		                            <span class="footer-icon__text t-white u-block text-uppercase">Theory</span>
 		                        </a>

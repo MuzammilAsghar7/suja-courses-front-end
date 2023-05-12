@@ -332,7 +332,8 @@ li{
     -webkit-user-select:none!important;
     -moz-user-select:none!important;
     -ms-user-select:none!important;
-    user-select:none!important
+    user-select:none!important;
+    position: relative;
 }
 .fs-dropdown-element{
     width:100%;
@@ -849,7 +850,9 @@ header .page__title{
 .checkbox-area .fs-checkbox-label{
     color:#fff;
     font-weight:400!important;
-    padding-left:0
+    padding-left:0;
+    position: relative;
+    z-index: 2;
 }
 .checkbox-area .fs-checkbox-flag::before{
     border-color:#000
@@ -895,7 +898,8 @@ header .page__title{
     position:fixed;
     bottom:0;
     width:100%;
-    min-height:54px
+    min-height:54px;
+    z-index: 9;
 }
 .links-list li{
     list-style-position:inside;
@@ -1237,13 +1241,14 @@ header .page__title{
     user-select:none
 }
 .fs-checkbox-marker{
-    position:relative;
+    position: absolute;
     width:20px;
     height:20px;
     border:1px solid #fff;
     cursor:pointer;
     display:block;
-    float:right
+    right: 0;
+    z-index: 1;
 }
 .fs-checkbox-flag{
     width:100%;
