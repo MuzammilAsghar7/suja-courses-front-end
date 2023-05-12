@@ -38,7 +38,7 @@ class QuestionController extends Controller
         // return $mcqArr;
         // return $request->lesson_id;
         $validator = Validator::make($request->all(), [
-            'title' => 'required|max:100|unique:questions',
+            'title' => 'required|max:100',
             'type' => 'required', 
         ]);
         if ($validator->fails()) {
@@ -66,8 +66,6 @@ class QuestionController extends Controller
             $qustion->qoptions()->attach($mcqArr);
         }
         
-        //$file = $request->file()['file'];
-
          return response()->json(['status'=>true,'question' => $qustion], 200);
     }
 
