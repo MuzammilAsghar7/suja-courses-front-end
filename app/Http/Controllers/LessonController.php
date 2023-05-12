@@ -132,8 +132,7 @@ class LessonController extends Controller
         } else{
             $nextchap_id = 'finish';
         }
-        
-
+    
         if($chapter){
             $lessons = $chapter->lessons()
             ->skip(($page_number - 1) * $limit)

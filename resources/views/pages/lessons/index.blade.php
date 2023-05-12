@@ -40,18 +40,12 @@ https://player.vimeo.com/external/267992569.sd.mp4?s=49d1618383afccfce3cf5908c9b
   </div>
 </section>
 
-<!-- @if($chapter['lesson']->id == $chapter['last_lesson_id'])
-  @section('page_number', 'last')
-@else
-  @section('page_number', ( $page + 1))
-@endif -->
-
 <section>
   <div class="container">
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div class="page-block text block-2 ">
-         {!! $chapter['lesson']->description !!}
+        <div class="page-block text   block-2 ">
+        {!! $chapter['lesson']->description !!}
 <!-- 
           <h2 class="u-block t-bold u-mb1">Next...</h2>
           <p>You are now ready to get started.</p>

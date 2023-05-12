@@ -24,7 +24,11 @@ class ChapterController extends Controller
     public function options()
     {
         $options = qoptions::all();
-        return response()->json($options, 200);
+        $opt = [];
+        foreach($options as $option){
+            $opt[] = ['name'=>$option->title, 'code'=>$option->id, 'status'=>false];
+        }
+        return response()->json($opt, 200);
     }
     /**
      * Show the form for creating a new resource.
