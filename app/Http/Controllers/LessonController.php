@@ -155,4 +155,8 @@ class LessonController extends Controller
         return view('pages/lessons/index', ['chapter'=>$chapter,'page'=>$page_number,'has_pagination' => true]);
     }
 
+    public function markread(Request $request){ 
+        dd($request->post()); 
+    }
+
 }

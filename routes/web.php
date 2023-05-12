@@ -58,6 +58,19 @@ Route::middleware(['auth'])->group(function () {
   Route::post('/register', [AuthController::class,'store']);
   Route::post('/logout', [AuthController::class,'logout'])->name('logout');
   Route::get('/{name}/{id}', [ModuleController::class,'chapters'])->name('chapters');
+  Route::get('/{name}/{id}', [ModuleController::class,'chapters'])->name('chapters');
+  Route::get('/getting-started/multiple-choice/review-best',function(){
+     return View::make('pages.mcqs.index');
+  });
+
+Route::get('/getting-started/multiple-choice/review/{id}/review-detail',function(){
+  return View::make('pages.mcqs.detail');
+});
+
+Route::get('/sample',function(){
+  
+  return View::make('pages.foundation.index');
+});
   // Route::get('/theory/{id}', [ModuleController::class,'chapters'])->name('chapters');
-  Route::get('/getting-started/{chapter_id}/{lesson_id}', [LessonController::class,'lessons'])->name('lessons.show');
+Route::get('/getting-started/{chapter_id}/{lesson_id}', [LessonController::class,'lessons'])->name('lessons.show');
 });

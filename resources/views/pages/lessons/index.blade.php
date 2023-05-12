@@ -4,12 +4,13 @@
 
 @section('content')
 
-
-
-<div class="page">
-
+<div class="page getting-started">
 @isset($chapter)
-
+@php 
+   $module_id = $chapter->module_id; 
+   $chapter_id = $chapter->id; 
+   $lesson_id = $chapter['lesson']->id; 
+@endphp
 
  <section>
   <div class="container">
@@ -18,11 +19,10 @@
         <div class="page-block video  block-1 ">
           <h2 class="u-block t-bold u-mt1 u-mb1">{{ $chapter['lesson']->title}}</h2>
           <div class="embed-responsive embed-responsive-16by9 ">
-            <video class="embed-responsive-item video" controlslist="nodownload" data-id="267992569" data-title="The foundation for your new career" data-source="
-
+            <video class="embed-responsive-item video w-100" controlslist="nodownload" data-id="267992569" data-title="The foundation for your new career" data-source="
 https://player.vimeo.com/external/267992569.sd.mp4?s=49d1618383afccfce3cf5908c9b4ea686b5ffd7c&amp;profile_id=164
 
-" poster="https://my-adi-course.co.uk/assets/img/video-poster.jpg" controls="controls">
+" poster="/assets/img/video-poster.jpg" controls="controls">
               <source src="
 
 https://player.vimeo.com/external/267992569.sd.mp4?s=49d1618383afccfce3cf5908c9b4ea686b5ffd7c&amp;profile_id=164
@@ -50,8 +50,8 @@ https://player.vimeo.com/external/267992569.sd.mp4?s=49d1618383afccfce3cf5908c9b
   <div class="container">
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <div class="page-block text   block-2 ">
-        {!! $chapter['lesson']->description !!}
+        <div class="page-block text block-2 ">
+         {!! $chapter['lesson']->description !!}
 <!-- 
           <h2 class="u-block t-bold u-mb1">Next...</h2>
           <p>You are now ready to get started.</p>
@@ -69,12 +69,12 @@ https://player.vimeo.com/external/267992569.sd.mp4?s=49d1618383afccfce3cf5908c9b
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <div class="checkbox-area u-mt1">
         <div class="checkbox">
-          <div class="fs-checkbox fs-light  fs-checkbox-checked">
+          <div class="fs-checkbox fs-light">
             <div class="fs-checkbox-marker" aria-hidden="true">
               <div class="fs-checkbox-flag"></div>
-              <input class="custom-checkbox section-read fs-checkbox-element" type="checkbox" value="" checked="checked">
+              <input class="custom-checkbox section-read fs-checkbox-element" id="checkbox-{{$question->id}}" type="checkbox" value="" checked="checked">
             </div>
-            <label class="fs-checkbox-label">
+            <label class="fs-checkbox-label" for="checkbox-{{$question->id}}">
               <span class="fs-checkbox-element_placeholder"></span> {{$question->title}} </label>
           </div>
         </div>
@@ -85,7 +85,13 @@ https://player.vimeo.com/external/267992569.sd.mp4?s=49d1618383afccfce3cf5908c9b
 @endforeach
   
 </section>
+<!-- Populate Hidden Fields -->
+<input type="hidden" class="user_id" value="{{ auth()->user()->id }}">
+<input type="hidden" class="module_id" value="{{ $module_id }}">
+<input type="hidden" class="chapter_id" value="{{ $chapter_id }}">
+<input type="hidden" class="lesson_id" value="{{ $lesson_id }}">
+<input type="hidden" class="question_id" value="{{ $lesson_id }}">
 @endisset
-
 </div>
 @endsection
+

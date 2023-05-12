@@ -536,12 +536,20 @@
             });
 
             // Getting Started Pages
-            var section_name = $('.section_name').val();
-            var page_name = $('.page_name').val();
-            var page_id = $('.page_id').val();
+            var module_id = $('.module_id').val();
+            var chapter_id = $('.chapter_id').val();
+            var lesson_id = $('.lesson_id').val();
 
             // Read Sections..
             $('.section-read').on('click', function () {
+                
+                if($(this).is(':checked')){
+                    $(this).closest('.fs-checkbox').addClass('fs-checkbox-checked');
+                }else
+                {
+                    $(this).closest('.fs-checkbox').removeClass('fs-checkbox-checked');
+                }
+
                 if ($(this).is(':checked')) {
                     $('.next-button').removeClass('no-show');
                     $('.next-button').addClass('show-button');
@@ -549,8 +557,8 @@
                     // Post Via AJAX....
                     $.ajax({
                         type: 'POST',
-                        url: '/page/mark-read',
-                        data: { _token: token, section_name: section_name, section_id: section_id, page_id: page_id },
+                        url: '/api/page/mark-read',
+                        data: { _token: token, module_id, chapter_id, lesson_id },
                         success: function success(data) {
                             // Do Nothing...
                         }

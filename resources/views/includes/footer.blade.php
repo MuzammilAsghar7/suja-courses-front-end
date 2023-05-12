@@ -23,8 +23,8 @@ if(isset($chapter) && isset($chapter['lesson']->id)){
       </div>
       
       <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-        <div class="text-right">
-          <div class="next-button">
+        <div class="text-right text-center">
+          <div class="next-button no-show">
             <div class="text-right">
 				@if($pagenumber == 'last')
 					@if($nextchapter == 'finish')
@@ -98,8 +98,8 @@ if(isset($chapter) && isset($chapter['lesson']->id)){
         <!-- /.container -->
     </div>
   @endif
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular.js">   </script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script> 
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular.js"> </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
 <script src="{{asset('_assets/js/script.js')}}"></script>
 <script>
@@ -112,6 +112,5 @@ angular.module('myApp', [])
         ++$scope.count;
     };  
 });
+
 </script>
-
-

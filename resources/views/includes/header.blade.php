@@ -53,10 +53,10 @@
         <div class="menu-sidebar">
             <ul class="menu">
                 <li>
-                    <a href="index.html">Home</a>
+                    <a href="/">Home</a>
                 </li>
                 <li>
-                    <a href="getting_started.html">Getting Started</a>
+                    <a href="/getting-started/1">Getting Started</a>
                 </li>
                 <li>
                     <a href="#">Theory</a>
@@ -106,7 +106,9 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="company-logo text-center">
+                       <a href="/">
                         <img src="{{asset('_assets/img/logo.png')}}">
+                       </a>
                     </div>
                     <!-- <div class="company-brand -brand-1"></div> -->
                 </div>
