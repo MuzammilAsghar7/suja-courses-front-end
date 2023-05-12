@@ -34,7 +34,8 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        return $request['mcqs'];
+        
+        // return $mcqArr;
         // return $request->lesson_id;
         $validator = Validator::make($request->all(), [
             'title' => 'required|max:100|unique:questions',
@@ -53,9 +54,18 @@ class QuestionController extends Controller
              'title' => $request->title,
              "content" => $request->content,
          ]);
-
+         
          $qustion->lesson()->attach($request->lesson_id);
          $qustion->qtype()->attach($request->type);
+
+        if(isset($request['mcqs'])){
+            $mcqArr = [];
+            foreach($request['mcqs'] as $mcq){
+                $mcqArr[] = ['qoption_id'=>$mcq['code'], 'status'=>$mcq['status']];
+            }
+            $qustion->qoptions()->attach($mcqArr);
+        }
+        
         //$file = $request->file()['file'];
 
          return response()->json(['status'=>true,'question' => $qustion], 200);

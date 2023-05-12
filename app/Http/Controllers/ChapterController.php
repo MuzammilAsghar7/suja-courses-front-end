@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\chapter;
 use App\Models\course;
-use App\Models\qoptions;
+use App\Models\qoption;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorechapterRequest;
 use App\Http\Requests\UpdatechapterRequest;
@@ -23,7 +23,7 @@ class ChapterController extends Controller
 
     public function options()
     {
-        $options = qoptions::all();
+        $options = qoption::all();
         $opt = [];
         foreach($options as $option){
             $opt[] = ['name'=>$option->title, 'code'=>$option->id, 'status'=>false];

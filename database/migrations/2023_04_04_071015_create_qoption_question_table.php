@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('qoption_question', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('question_id');
-            $table->foreign('question_id')->references('id')->on('questions')->onUpdate('cascade');
             $table->unsignedBigInteger('qoption_id');
             $table->foreign('qoption_id')->references('id')->on('qoptions')->onUpdate('cascade');
+            $table->unsignedBigInteger('question_id');
+            $table->foreign('question_id')->references('id')->on('questions')->onUpdate('cascade');
+            $table->string('status');
             $table->timestamps();
         });
     }
