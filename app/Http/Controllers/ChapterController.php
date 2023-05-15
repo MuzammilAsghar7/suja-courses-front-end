@@ -131,7 +131,7 @@ class ChapterController extends Controller
                 ], 200);
         }
         
-         $option = qoptions::create([
+         $option = qoption::create([
              'title' => $request->title,
          ]);
          
@@ -139,7 +139,7 @@ class ChapterController extends Controller
 
     public function delete_option(Request $request)
      {  
-        $res = qoptions::where('id',$request->id)->delete();
+        $res = qoption::where('id',$request->id)->delete();
         return response()->json(['status'=>true], 200);
     }
 }

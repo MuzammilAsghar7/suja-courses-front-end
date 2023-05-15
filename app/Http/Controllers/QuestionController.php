@@ -16,7 +16,7 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $question = Question::all();
+        $question = question::all();
         return response()->json(['status'=>true,'questions' => $question], 200);
 
     }
@@ -34,9 +34,6 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        
-        // return $mcqArr;
-        // return $request->lesson_id;
         $validator = Validator::make($request->all(), [
             'title' => 'required|max:100',
             'type' => 'required', 
@@ -50,7 +47,7 @@ class QuestionController extends Controller
                 ], 200);
         }
         
-         $qustion = Question::create([
+         $qustion = question::create([
              'title' => $request->title,
              "content" => $request->content,
          ]);
