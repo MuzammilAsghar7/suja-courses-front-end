@@ -33,8 +33,7 @@
   </div>
   <!-- /.container -->
 </section>
-
-@foreach($course->chapters as $chapter)
+@foreach($course->chapters_with_lesson as $chapter)
 <section>
     <div class="container">
         <div class="row align-items-center">

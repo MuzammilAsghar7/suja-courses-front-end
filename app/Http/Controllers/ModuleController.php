@@ -81,11 +81,10 @@ class ModuleController extends Controller
 
         $course = Module::where('id', $id)
         ->withCount('chapters')
-        ->with(['chapters' => function ($query) {
+        ->with(['chapters_with_lesson' => function ($query) {
             $query->withCount('lessons');
         }])
         ->first();
-
         return View('pages/chapters/index',['course' => $course]);
     }
 

@@ -13,7 +13,12 @@ class chapter extends Model
     {
         return $this->belongsTo(module::class,'module_id');
     }
+
     public function lessons(){
         return $this->belongsToMany(lesson::class);
+    }
+
+    public function lessons_with_question(){
+        return $this->belongsToMany(lesson::class)->whereHas('questions');
     }
 }

@@ -3,12 +3,76 @@
 
 <div class="page getting-started">
 
+@if($chapter['lesson']->questions[0]->qtype[0]->id == '3')
+  <pre>
+    {{ $chapter['lesson']->questions[0]->qtype }}
+    {{ $chapter['lesson']->questions[0] }}
+  </pre>
+
+  <section id="main" class="wrap">
+  <div class="container">
+  <!-- /.container -->
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <h4 class="u-mb2">Question</h4>
+        <h4 class="question u-mb2">{{ $chapter['lesson']->questions[0]->title }}:</h4>
+        <h4 class="u-mb2">Answers</h4>
+
+        <a href="#" data-answer="a" class="question-option append-answer  selected  correct     locked ">
+          <span class="question-option__text">the key to success in any field of training;</span>
+        </a>
+        <a href="#" data-answer="b" class="question-option append-answer   locked ">
+          <span class="question-option__text">useful but not really necessary in training;</span>
+        </a>
+        <a href="#" data-answer="c" class="question-option append-answer   locked ">
+          <span class="question-option__text">only important when studying something difficult;</span>
+        </a>
+        <a href="#" data-answer="d" class="question-option append-answer   locked ">
+          <span class="question-option__text">not necessary for learner drivers;</span>
+        </a>
+      </div>
+      <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row u-mt2">
+      <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+        <a class="button -purple u-block" href="https://my-adi-course.co.uk/getting-started/multiple-choice/review/11/review-detail">
+          <i class="fa fa-chevron-left"></i> Previous Question </a>
+      </div>
+      <!-- /.col-lg-4 -->
+      <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+        <a class="button -purple u-block" href="https://my-adi-course.co.uk/getting-started/multiple-choice/review-best">Back To Review</a>
+      </div>
+      <!-- /.col-lg-4 -->
+      <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+        <a class="button -purple u-block" href="https://my-adi-course.co.uk/getting-started/multiple-choice/review/13/review-detail">Next Question <i class="fa fa-chevron-right"></i>
+        </a>
+      </div>
+      <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.container -->
+  <input type="hidden" class="question_id" value="12">
+  <input type="hidden" class="unit_id" value="0">
+  <input type="hidden" class="answer_id" value="42927">
+  <input type="hidden" class="score_id" value="39448">
+  <input type="hidden" class="gs_append" value="true">
+</section>
+
+
+
+
+
+
+@else
 @isset($chapter)
-@php 
-   $module_id = $chapter->module_id; 
-   $chapter_id = $chapter->id; 
-   $lesson_id = $chapter['lesson']->id; 
-@endphp
+  @php 
+    $module_id = $chapter->module_id; 
+    $chapter_id = $chapter->id; 
+    $lesson_id = $chapter['lesson']->id; 
+  @endphp
 
  <section>
   <div class="container">
@@ -92,6 +156,14 @@ https://player.vimeo.com/external/267992569.sd.mp4?s=49d1618383afccfce3cf5908c9b
  <input type="hidden" class="question_id" value="{{ $question_id }}">
 @endif
 @endisset
+@endif
 </div>
+<style>
+@media (min-width: 768px){
+    .container {
+        width: 720px !important;
+    }
+}
+</style>
 @endsection
 

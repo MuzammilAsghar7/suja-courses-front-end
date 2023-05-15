@@ -18,4 +18,10 @@ class module extends Model
     {
         return $this->hasMany(chapter::class);
     }
+
+    public function chapters_with_lesson()
+    {
+        $chapters = $this->hasMany(chapter::class);
+        return $chapters->whereHas('lessons');
+    }
 }

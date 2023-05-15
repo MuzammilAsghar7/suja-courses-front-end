@@ -136,10 +136,11 @@ class LessonController extends Controller
             $lessons = $chapter->lessons()
             ->skip(($page_number - 1) * $limit)
             ->take($limit)
+            ->whereHas('questions')
             ->first();
             $chapter['lesson'] = $lessons;
-            $chapter['last_lesson_id'] = $chapter->lessons->last()->id;
-            $chapter['next_chapter'] = $nextchap_id;
+            $chapter['last_lesson_id'] = $chapter->lessons_with_question->last()->id;
+            $chapter['next_chapter'] = $nextchap_id;           
         } 
         else{
             return redirect("/getting-started/$nextchap_id/1");
