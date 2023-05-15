@@ -7,19 +7,27 @@
   <pre>
     {{ $chapter['lesson']->questions[0]->qtype }}
     {{ $chapter['lesson']->questions[0] }}
+    {{ $chapter['lesson']->questions[0]->qoptions}}
   </pre>
 
   <section id="main" class="wrap">
   <div class="container">
   <!-- /.container -->
   <div class="container">
+    @foreach($chapter['lesson']->questions as $ques)
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <h4 class="u-mb2">Question</h4>
-        <h4 class="question u-mb2">{{ $chapter['lesson']->questions[0]->title }}:</h4>
+        <h4 class="question u-mb2">{{ $ques->title }}:</h4>
         <h4 class="u-mb2">Answers</h4>
-
-        <a href="#" data-answer="a" class="question-option append-answer  selected  correct     locked ">
+        @if(isset($ques->qoptions))
+          @foreach($ques->qoptions as $option)
+            <a href="#" data-answer="a" class="question-option append-answer  selected  correct     locked ">
+              <span class="question-option__text">{{$option->title}}</span>
+            </a>
+          @endforeach
+        @endif
+        <!-- <a href="#" data-answer="a" class="question-option append-answer  selected  correct     locked ">
           <span class="question-option__text">the key to success in any field of training;</span>
         </a>
         <a href="#" data-answer="b" class="question-option append-answer   locked ">
@@ -30,11 +38,12 @@
         </a>
         <a href="#" data-answer="d" class="question-option append-answer   locked ">
           <span class="question-option__text">not necessary for learner drivers;</span>
-        </a>
+        </a> -->
       </div>
       <!-- /.col-lg-12 -->
     </div>
     <!-- /.row -->
+    @endforeach
     <div class="row u-mt2">
       <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
         <a class="button -purple u-block" href="https://my-adi-course.co.uk/getting-started/multiple-choice/review/11/review-detail">
@@ -61,10 +70,17 @@
   <input type="hidden" class="gs_append" value="true">
 </section>
 
+@elseif($chapter['lesson']->questions[0]->qtype[0]->id == '2')
 
-
-
-
+  <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="foundation-area"><h4 class="question">Taking responsibility for learning is sometimes referred to as 'taking ownership of learning' or 'empowering the learner'.  Use Google to search for 'ownership of learning' and then briefly explain in your own words any benefits that you think this approach has.</h4><form class="foundation-form foundation-0" data-toggle="validator" novalidate="true"><div class="form-group"> <label class="control-label">My Answer</label><textarea name="answer" class="form-control form__input form__textarea answer" minlength="0" placeholder="My Answer" data-minlength="180" data-error="In order to move on, please give a more comprehensive explanation" required="" min="0"></textarea><span class="glyphicon form-control-feedback" aria-hidden="true"></span><div class="help-block with-errors"></div></div><div class="form-group"> <label class="control-label">Reference</label><textarea name="reference" class="form-control form__input form__textarea" min="10" placeholder="Reference" data-error="Please enter a reference" required=""></textarea><span class="glyphicon form-control-feedback" aria-hidden="true"></span><div class="help-block with-errors"></div></div><div class="row u-mt2"><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> <button type="submit" class="foundation-save button -purple u-pt1 u-pb1 disabled" data-question="0">Save</button></div></div></form></div><!-- /.foundation-area -->
+                </div><!-- /.col-lg-12 -->
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+    </section>
 
 @else
 @isset($chapter)
