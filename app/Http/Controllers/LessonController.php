@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\lesson;
-use App\Models\chapter;
+use App\Models\{ chapter,Attempt };
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorelessonRequest;
 use App\Http\Requests\UpdatelessonRequest;
@@ -124,7 +124,6 @@ class LessonController extends Controller
         $page_number = $lesson_id;
         $limit = 1; 
         $chapter = Chapter::where('id', $chapter_id)->whereHas('lessons')->first();
-
         $nextchapter = Chapter::select('id')->where('id', '>', $chapter_id)->whereHas('lessons')->first();
 
         if($nextchapter){
@@ -155,7 +154,24 @@ class LessonController extends Controller
     }
 
     public function markread(Request $request){ 
-        dd($request->post()); 
+        
+        $request->validate([
+            'user_id' => 'required',
+            'module_id' => 'required',
+            'chapter_id' => 'required',
+            'lesson_id' => 'required',
+            'question_id' => 'required',
+        ]);
+
+
+        Attempt::updateOrCreate([
+            'user_id' => $request->user_id,
+            'module_id' => $request->module_id,
+            'chapter_id' => $request->chapter_id,
+            'lesson_id' => $request->lesson_id,
+            'question_id' => $request->question_id
+        ]);
+        dd($request->post());
     }
 
 }
