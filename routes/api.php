@@ -39,7 +39,7 @@ Route::get('/config',[ConfigController::class,'index']);
 Route::get('/modules',[ModuleController::class,'get_modules']);
 Route::get('/chapters', [ChapterController::class,'index']);
 Route::get('/questions', [QuestionController::class,'index']);
-Route::get('/questions/{id}', [QuestionController::class,'show']);
+// Route::get('/questions/{id}', [QuestionController::class,'show']);
 
 Route::get('/lessons', [LessonController::class,'index']);
 Route::get('/lessons/{id}', [LessonController::class,'lesson']);
@@ -47,8 +47,9 @@ Route::put('/lessons/{id}', [LessonController::class,'update']);
 Route::post('/add-lesson', [LessonController::class,'store']);
 
 Route::get('/questions', [QuestionController::class,'index']);
+Route::get('/lesson_questions/{lesson_id}/{chapter_id}', [QuestionController::class,'lesson_questions']);
 Route::get('/questions/{id}', [QuestionController::class,'show']);
-Route::put('/questions/{id}', [QuestionController::class,'update']);
+Route::post('/questions/{id}', [QuestionController::class,'edit']);
 Route::post('/add-question', [QuestionController::class,'store']);
 
 

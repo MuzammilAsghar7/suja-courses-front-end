@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\lesson;
 use App\Models\question;
+use App\Models\qoption;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorequestionRequest;
 use App\Http\Requests\UpdatequestionRequest;
@@ -18,9 +20,14 @@ class QuestionController extends Controller
     {
         $question = question::all();
         return response()->json(['status'=>true,'questions' => $question], 200);
-
     }
 
+    public function lesson_questions($lesson_id, $chapter_id)
+    {
+        $lesson = lesson::find($lesson_id);
+        $question = $lesson->questions;
+        return response()->json(['status'=>true,'questions' => $question], 200);
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -52,16 +59,21 @@ class QuestionController extends Controller
              "content" => $request->content,
          ]);
          
+
          $qustion->lesson()->attach($request->lesson_id);
          $qustion->qtype()->attach($request->type);
 
         if(isset($request['mcqs'])){
-            $mcqArr = [];
             foreach($request['mcqs'] as $mcq){
-                $mcqArr[] = ['qoption_id'=>$mcq['code'], 'status'=>$mcq['status']];
+                $options = [
+                    'question_id' => $qustion->id,
+                    'title' => $mcq['answerOption'],
+                    "status" => $mcq['status'],
+                ];
+                qoption::updateOrCreate($options,['id'=>$mcq['optionId']]);
             }
-            $qustion->qoptions()->attach($mcqArr);
         }
+        
         
          return response()->json(['status'=>true,'question' => $qustion], 200);
     }
@@ -73,14 +85,16 @@ class QuestionController extends Controller
     {
         $qustion = Question::find($id);
         $qustion['type'] = $qustion->qtype[0]->id;
-
-
-
-        // $options = qoption::all();
+       
         if($qustion->qtype[0]->id == 3){
             $opt = [];
+            $correct = '';
             foreach($qustion->qoptions as $option){
-                $opt[] = ['name'=>$option->title, 'code'=>$option->id, 'status'=> false];
+                $opt[] = ['answerOption'=>$option->title, 'status'=> $option->status == 0 ? false : true,'optionId'=> $option->id];
+                if($option->status == 1){
+                    $correct = $option->title;
+                    $qustion['correct'] = $correct;
+                }
             }
             $qustion['selectedmcqs'] = $opt;
         }
@@ -93,11 +107,41 @@ class QuestionController extends Controller
      */
     public function edit($id,Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|max:100',
+            'type' => 'required', 
+        ]);
+        if ($validator->fails()) {
+             $errors = ValidationHelper::getValidationErrors($validator->errors());
+            return response()->json(
+                [
+                    'status' => false,
+                    'errors' => $errors
+                ], 200);
+        }
+
         // return $request;
         $update = Question::find($id);
         $update->title = $request['title'];
         $update->content = $request['content'];
-        $update->save();
+        
+        if($update->save()){
+            $update->lesson()->sync($request->lesson_id);
+            $update->qtype()->sync($request->type);
+
+            if(isset($request['mcqs'])){
+                foreach($request['mcqs'] as $mcq){
+                    $options = [
+                        'question_id' => $update->id,
+                        'title' => $mcq['answerOption'],
+                        "status" => $mcq['status'],
+                    ];
+                    qoption::updateOrCreate($options,['id'=> $mcq['optionId']]);
+                }
+            }
+        }
+
+
         return response()->json(['status'=>true,'message' => 'updated successfully'], 200);
     }
 

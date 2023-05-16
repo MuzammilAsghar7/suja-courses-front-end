@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class qoption extends Model
 {
     use HasFactory;
-    protected $fillable = ['title'];
+    protected $fillable = ['question_id', 'title', 'status'];
 }

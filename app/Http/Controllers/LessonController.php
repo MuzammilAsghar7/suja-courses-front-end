@@ -67,7 +67,7 @@ class LessonController extends Controller
     {
         // return $id;
         $chapter = Chapter::find($id);
-        $lessons = $chapter->lessons;
+        $lessons = $chapter->lessons()->withCount('questions')->get();
         return response()->json(
             [
                 'status' => true,

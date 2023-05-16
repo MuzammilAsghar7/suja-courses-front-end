@@ -6,7 +6,7 @@
 @if($chapter['lesson']->questions[0]->qtype[0]->id == '3')
   <pre>
     {{ $chapter['lesson']->questions[0]->qtype }}
-    {{ $chapter['lesson']->questions[0] }}
+    {{ $chapter['lesson']->questions }}
     {{ $chapter['lesson']->questions[0]->qoptions}}
   </pre>
 

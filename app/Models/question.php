@@ -27,7 +27,7 @@ class question extends Model implements HasMedia
         return $this->belongsToMany(qtype::class);
     }
     public function qoptions(){
-        return $this->belongsToMany(qoption::class)->withPivot('status');
+        return $this->hasMany(qoption::class);
     }
 }
 
