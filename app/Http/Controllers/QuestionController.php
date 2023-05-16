@@ -72,6 +72,19 @@ class QuestionController extends Controller
     public function show($id)
     {
         $qustion = Question::find($id);
+        $qustion['type'] = $qustion->qtype[0]->id;
+
+
+
+        // $options = qoption::all();
+        if($qustion->qtype[0]->id == 3){
+            $opt = [];
+            foreach($qustion->qoptions as $option){
+                $opt[] = ['name'=>$option->title, 'code'=>$option->id, 'status'=> false];
+            }
+            $qustion['selectedmcqs'] = $opt;
+        }
+
         return response()->json(['status'=>true,'question' => $qustion], 200);
     }
 
