@@ -105,11 +105,21 @@ if(isset($chapter) && isset($chapter['lesson']->id)){
 <script>
 angular.module('myApp', [])
 .controller('myController', function($scope) {
-    $scope.count = 0;
+    $scope.step = 0;
     $scope.name = 'Dummy User';
-    $scope.countIncrement = function(data) {
-        $scope.name = data.name;
-        ++$scope.count;
+	$scope.answer = {};
+	$scope.saveQuestion = function(limit) {
+		if($scope.step < limit-1){
+			++$scope.step;
+		}
+		else {
+			window.location = "http://192.168.1.23:8000/getting-started/1"
+		}
+    }; 
+    $scope.stepIncrement = function(limit) {
+		if($scope.step < limit-1){
+			++$scope.step;
+		}
     };  
 });
 

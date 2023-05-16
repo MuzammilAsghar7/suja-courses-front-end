@@ -27,18 +27,6 @@
             </a>
           @endforeach
         @endif
-        <!-- <a href="#" data-answer="a" class="question-option append-answer  selected  correct     locked ">
-          <span class="question-option__text">the key to success in any field of training;</span>
-        </a>
-        <a href="#" data-answer="b" class="question-option append-answer   locked ">
-          <span class="question-option__text">useful but not really necessary in training;</span>
-        </a>
-        <a href="#" data-answer="c" class="question-option append-answer   locked ">
-          <span class="question-option__text">only important when studying something difficult;</span>
-        </a>
-        <a href="#" data-answer="d" class="question-option append-answer   locked ">
-          <span class="question-option__text">not necessary for learner drivers;</span>
-        </a> -->
       </div>
       <!-- /.col-lg-12 -->
     </div>
@@ -70,18 +58,48 @@
   <input type="hidden" class="gs_append" value="true">
 </section>
 
-@elseif($chapter['lesson']->questions[0]->qtype[0]->id == '2')
 
+
+@elseif($chapter['lesson']->questions[0]->qtype[0]->id == '2')
+  <h1 ng-bind="answer.answer"></h1>
+  <h1 ng-bind="answer.reference"></h1>
   <section>
         <div class="container">
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="foundation-area"><h4 class="question">Taking responsibility for learning is sometimes referred to as 'taking ownership of learning' or 'empowering the learner'.  Use Google to search for 'ownership of learning' and then briefly explain in your own words any benefits that you think this approach has.</h4><form class="foundation-form foundation-0" data-toggle="validator" novalidate="true"><div class="form-group"> <label class="control-label">My Answer</label><textarea name="answer" class="form-control form__input form__textarea answer" minlength="0" placeholder="My Answer" data-minlength="180" data-error="In order to move on, please give a more comprehensive explanation" required="" min="0"></textarea><span class="glyphicon form-control-feedback" aria-hidden="true"></span><div class="help-block with-errors"></div></div><div class="form-group"> <label class="control-label">Reference</label><textarea name="reference" class="form-control form__input form__textarea" min="10" placeholder="Reference" data-error="Please enter a reference" required=""></textarea><span class="glyphicon form-control-feedback" aria-hidden="true"></span><div class="help-block with-errors"></div></div><div class="row u-mt2"><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> <button type="submit" class="foundation-save button -purple u-pt1 u-pb1 disabled" data-question="0">Save</button></div></div></form></div><!-- /.foundation-area -->
-                </div><!-- /.col-lg-12 -->
+          @foreach($chapter['lesson']->questions as $key => $ques)
+            <div class="row" ng-if="step == {{$key}}" >
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class=""><h4 class="question">{{$ques->title}}</h4>
+                  <form class="foundation-form foundation-0" data-toggle="validator" novalidate="true">
+                    <div class="form-group"> 
+                      <label class="control-label">My Answer</label>
+                      <textarea name="answer" class="form-control form__input form__textarea answer" ng-model="answer.answer" minlength="0" placeholder="My Answer" data-minlength="180" data-error="In order to move on, please give a more comprehensive explanation" required="" min="0"></textarea>
+                      <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                      <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label">Reference</label>
+                      <textarea name="reference" class="form-control form__input form__textarea" min="10" ng-model="answer.reference" placeholder="Reference" data-error="Please enter a reference" required=""></textarea>
+                      <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                      <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="row u-mt2">
+                      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <button type="submit" class="foundation-save button -purple u-pt1 u-pb1 disabled" data-question="0" ng-click="saveQuestion({{count($chapter['lesson']->questions)}})">Save</button>
+                      </div>
+                      @if(count($chapter['lesson']->questions) == ($key+1))
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                          <button type="submit" class="foundation-save button -purple u-pt1 u-pb1 disabled" data-question="0" >Getting Started</button>
+                        </div>
+                      @endif
+                    </div>
+                  </form>
+                </div><!-- /.foundation-area -->
+              </div><!-- /.col-lg-12 -->
             </div><!-- /.row -->
+          @endforeach
         </div><!-- /.container -->
     </section>
-
+  
 @else
 @isset($chapter)
   @php 
