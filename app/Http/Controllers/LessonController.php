@@ -37,7 +37,7 @@ class LessonController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'title' => 'required|max:100|unique:lessons',
+            'title' => 'required|max:200',
             'chapter_id' => 'required',
             'status' => 'required',
         ]);
@@ -164,7 +164,7 @@ class LessonController extends Controller
             'question_id' => 'required',
         ]);
 
-
+        
         Attempt::updateOrCreate([
             'user_id' => $request->user_id,
             'module_id' => $request->module_id,

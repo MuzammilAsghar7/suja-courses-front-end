@@ -42,7 +42,7 @@ class QuestionController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'title' => 'required|max:100',
+            'title' => 'required|max:300',
             'type' => 'required', 
         ]);
         if ($validator->fails()) {

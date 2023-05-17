@@ -1,3 +1,14 @@
+<?php
+	// if(isset($chapter) && isset($chapter['lesson']->id)){
+	// 	if($chapter['lesson']->id == $chapter['last_lesson_id']){
+	// 		$pagenumber = 'last';
+	// 		$nextchapter = $chapter['next_chapter'];
+	// 	} else{
+	// 		$pagenumber = $page + 1;
+	// 		$chapter_id = $chapter->id;
+	// 	}
+	// }
+?>
 <header class="site-header">
         <div class="container-fluid">
             <div class="row">

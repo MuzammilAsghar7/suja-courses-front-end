@@ -1,16 +1,13 @@
-
 <?php
-
-if(isset($chapter) && isset($chapter['lesson']->id)){
-	if($chapter['lesson']->id == $chapter['last_lesson_id']){
-		$pagenumber = 'last';
-		$nextchapter = $chapter['next_chapter'];
-	} else{
-		$pagenumber = $page + 1;
-		$chapter = $chapter->id;
-	}
-
-}
+	// if(isset($chapter) && isset($chapter['lesson']->id)){
+	// 	if($chapter['lesson']->id == $chapter['last_lesson_id']){
+	// 		$pagenumber = 'last';
+	// 		$nextchapter = $chapter['next_chapter'];
+	// 	} else{
+	// 		$pagenumber = $page + 1;
+	// 		$chapter_id = $chapter->id;
+	// 	}
+	// }
 ?>
 
 
@@ -26,7 +23,7 @@ if(isset($chapter) && isset($chapter['lesson']->id)){
         <div class="text-right text-center">
           <div class="next-button no-show">
             <div class="text-right">
-				@if($pagenumber == 'last')
+				@if($lastnumner == 'last')
 					@if($nextchapter == 'finish')
 						<a class="started-back" href="/getting-started/1/">
 							<span class="desktop">Geeting Started</span>
@@ -39,7 +36,7 @@ if(isset($chapter) && isset($chapter['lesson']->id)){
 						</a>
 					@endif
 				@else
-					<a class="started-back" href="/{{session('module_name')}}/{{$chapter}}/{{$pagenumber}}">
+					<a class="started-back" href="/{{session('module_name')}}/{{$chapter_id}}/{{$pagenumber}}">
 						<span class="desktop">Next </span>
 						<i class="fa fa-chevron-right"></i>
 					</a>

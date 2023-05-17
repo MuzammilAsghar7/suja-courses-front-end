@@ -1,30 +1,43 @@
 @extends('layouts.default')
 @section('content')
 
+<?php
+	if(isset($chapter) && isset($chapter['lesson']->id)){
+		if($chapter['lesson']->id == $chapter['last_lesson_id']){
+			$pagenumber = $page + 1;
+      $lastnumner = 'last';
+			$nextchapter = $chapter['next_chapter'];
+      $chapter_id = $chapter->id;
+		} else{
+			$pagenumber = $page + 1;
+			$chapter_id = $chapter->id;
+      $lastnumner = 'notlast';
+		}
+	}
+?>
+
 <div class="page getting-started">
 
 @if($chapter['lesson']->questions[0]->qtype[0]->id == '3')
-  <pre>
-    {{ $chapter['lesson']->questions[0]->qtype }}
-    {{ $chapter['lesson']->questions }}
-    {{ $chapter['lesson']->questions[0]->qoptions}}
-  </pre>
+  
 
   <section id="main" class="wrap">
   <div class="container">
   <!-- /.container -->
   <div class="container">
-    @foreach($chapter['lesson']->questions as $ques)
+    @foreach($chapter['lesson']->questions as $key => $ques)
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <h4 class="u-mb2">Question</h4>
         <h4 class="question u-mb2">{{ $ques->title }}:</h4>
         <h4 class="u-mb2">Answers</h4>
         @if(isset($ques->qoptions))
-          @foreach($ques->qoptions as $option)
-            <a href="#" data-answer="a" class="question-option append-answer  selected  correct     locked ">
+          @foreach($ques->qoptions as $key2 => $option)
+          <a href="#" for="answer_{{$key}}{{$key2}}" class="question-option append-answer">
               <span class="question-option__text">{{$option->title}}</span>
-            </a>
+          </a>
+            <input type="radio" id="answer_{{$key}}{{$key2}}" name="answer_{{$key}}" class="d-none" value="{{$option->id}}">
+             <!-- class="question-option append-answer  selected  correct     locked "> -->
           @endforeach
         @endif
       </div>
@@ -34,18 +47,37 @@
     @endforeach
     <div class="row u-mt2">
       <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-        <a class="button -purple u-block" href="https://my-adi-course.co.uk/getting-started/multiple-choice/review/11/review-detail">
-          <i class="fa fa-chevron-left"></i> Previous Question </a>
+        @if(($pagenumber-1) > 1)
+          <a class="button -purple u-block" href="/{{session('module_name')}}/{{$chapter_id}}/{{$pagenumber-2}}">
+          <i class="fa fa-chevron-left"></i> Previous Question</a>
+        @else
+          <a class="button -purple u-block" href="/{{session('module_name')}}/1">
+          <i class="fa fa-chevron-left"></i> Getting Started</a>
+        @endif
       </div>
       <!-- /.col-lg-4 -->
       <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
         <a class="button -purple u-block" href="https://my-adi-course.co.uk/getting-started/multiple-choice/review-best">Back To Review</a>
       </div>
       <!-- /.col-lg-4 -->
-      <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-        <a class="button -purple u-block" href="https://my-adi-course.co.uk/getting-started/multiple-choice/review/13/review-detail">Next Question <i class="fa fa-chevron-right"></i>
-        </a>
-      </div>
+        @if($lastnumner == 'last')
+					@if($nextchapter == 'finish')
+						<a class="started-back" href="/getting-started/1/">
+							<span class="desktop">Geeting Started</span><i class="fa fa-chevron-right"></i>
+						</a>
+					@else
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+              <a class="button -purple u-block" href="/{{session('module_name')}}/{{$nextchapter}}/1">Next Topic <i class="fa fa-chevron-right"></i></a>
+            </div>
+					@endif
+				@else
+          <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+            <a class="button -purple u-block" href="/{{session('module_name')}}/{{$chapter_id}}/{{$pagenumber}}">Next Question <i class="fa fa-chevron-right"></i></a>
+          </div>
+				@endif
+          <!-- <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+            <a class="button -purple u-block" >Next Question <i class="fa fa-chevron-right"></i></a>
+          </div> -->
       <!-- /.col-lg-12 -->
     </div>
     <!-- /.row -->
