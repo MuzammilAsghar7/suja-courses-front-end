@@ -21,7 +21,16 @@
       
       <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
         <div class="text-right text-center">
-          <div class="next-button no-show">
+		@if(isset($question))	  
+			@if($question->checkuserAns($question->id))
+				<div class="next-button show-button">
+			@else
+				<div class="next-button no-show">
+			@endif
+		@else
+			<div class="next-button no-show">
+		@endif
+          <!-- <div class="next-button no-show"> -->
             <div class="text-right">
 				@if($lastnumner == 'last')
 					@if($nextchapter == 'finish')

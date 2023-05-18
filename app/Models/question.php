@@ -29,5 +29,14 @@ class question extends Model implements HasMedia
     public function qoptions(){
         return $this->hasMany(qoption::class);
     }
+    public function checkuserAns($question_id)
+    {
+        $attempt = Attempt::where(['user_id'=> auth()->user()->id, 'question_id' => $question_id])->first();
+        if($attempt){
+            return true;
+        } else{
+            return false;
+        }
+    }
 }
 

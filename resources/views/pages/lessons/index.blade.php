@@ -198,13 +198,17 @@ https://player.vimeo.com/external/267992569.sd.mp4?s=49d1618383afccfce3cf5908c9b
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <div class="checkbox-area u-mt1">
         <div class="checkbox">
-          <div class="fs-checkbox fs-light">
+          @if($question->checkuserAns($question->id))
+            <div class="fs-checkbox fs-light fs-checkbox-checked">
+          @else
+            <div class="fs-checkbox fs-light ">
+          @endif
             <div class="fs-checkbox-marker" aria-hidden="true">
               <div class="fs-checkbox-flag"></div>
               <input class="custom-checkbox section-read fs-checkbox-element" id="checkbox-{{$question->id}}" type="checkbox" value="" checked="checked">
             </div>
             <label class="fs-checkbox-label" for="checkbox-{{$question->id}}">
-              <span class="fs-checkbox-element_placeholder"></span> {{$question->title}} </label>
+              <span class="fs-checkbox-element_placeholder"></span> {{$question->title}}</label>
           </div>
         </div>
       </div>
