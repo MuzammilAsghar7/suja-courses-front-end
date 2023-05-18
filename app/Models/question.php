@@ -8,6 +8,8 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Carbon\Carbon;
+
 
 class question extends Model implements HasMedia
 {
@@ -38,5 +40,15 @@ class question extends Model implements HasMedia
             return false;
         }
     }
+
+    public function foundation($question_id)
+    {
+        $foundationsGet = Foundation::where(['user_id'=> auth()->user()->id, 'question_id' => $question_id])->get();
+        if($foundationsGet){
+            return $foundationsGet;
+        } else{
+            return false;
+        }
+    }    
 }
 

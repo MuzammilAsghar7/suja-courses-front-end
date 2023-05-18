@@ -9,4 +9,10 @@ class qoption extends Model
 {
     use HasFactory;
     protected $fillable = ['question_id', 'title', 'status'];
+
+    public function checkCorrectOption($option_id)
+    {
+        
+    }
+    
 }

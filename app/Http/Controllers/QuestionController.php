@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\lesson;
 use App\Models\question;
 use App\Models\qoption;
+use App\Models\Attempt;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorequestionRequest;
 use App\Http\Requests\UpdatequestionRequest;
@@ -159,5 +160,39 @@ class QuestionController extends Controller
     public function destroy(question $question)
     {
         //
+    }
+
+    public function append_answer(Request $request)
+    {
+        $request->validate([
+            'module_id' => 'required',
+            'chapter_id' => 'required',
+            'lesson_id' => 'required',
+            'question_id' => 'required',
+            'answer_id' => 'required',
+            'status' => 'required',
+        ]);
+
+        if($request->status != 1){
+            return response()->json(
+                [
+                    'status' => false,
+                    'class' => 'incorrect'
+                ], 200);
+        }
+
+        Attempt::updateOrCreate([
+            'user_id' => auth()->user()->id,
+            'module_id' => $request->module_id,
+            'chapter_id' => $request->chapter_id,
+            'lesson_id' => $request->lesson_id,
+            'question_id' => $request->question_id,
+            'qoption_id' => $request->answer_id,
+        ]);
+        return response()->json(
+            [
+                'status' => true,
+                'class' => 'correct' 
+            ], 200);
     }
 }

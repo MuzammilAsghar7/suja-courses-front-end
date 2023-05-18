@@ -576,12 +576,16 @@
 
             if (review_answers.length) {
                 var question_id = $('.question_id').val();
-                var score_id = $('.score_id').val();
-                var answer_id = $('.answer_id').val();
-                var unit_id = $('.unit_id').val();
+                // var score_id = $('.score_id').val();
+                // var answer_id = $('.answer_id').val();
+                // var unit_id = $('.unit_id').val();
+                var module_id = $('.module_id').val();
+                var chapter_id = $('.chapter_id').val();
+                var lesson_id = $('.lesson_id').val();
 
                 $('.append-answer').click(function () {
                     var chosen_answer = $(this).data('answer');
+                    var chosen_status = $(this).data('status');
                     var item = $(this);
 
                     if (item.hasClass('locked')) {
@@ -614,13 +618,18 @@
                             dataType: 'json',
                             data: {
                                 _token: token,
-                                answer: chosen_answer,
-                                answer_id: answer_id,
+                                // answer: chosen_answer,
+                                answer_id: chosen_answer,
+                                status: chosen_status,
                                 question_id: question_id,
-                                score_id: score_id,
-                                unit_id: unit_id
+                                // score_id: score_id,
+                                // unit_id: unit_id,
+                                module_id: module_id,
+                                chapter_id: chapter_id,
+                                lesson_id: lesson_id
                             },
                             success: function success(data) {
+                                console.log(data);
                                 var answer = data.answer;
 
                                 item.addClass(answer);

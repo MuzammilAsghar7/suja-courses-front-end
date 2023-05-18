@@ -172,7 +172,7 @@ class LessonController extends Controller
             'lesson_id' => $request->lesson_id,
             'question_id' => $request->question_id
         ]);
-        dd($request->post());
+        return redirect()->back();
     }
 
 }

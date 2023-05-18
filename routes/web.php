@@ -5,6 +5,8 @@ use App\HTTP\Controllers\AuthController;
 use App\HTTP\Controllers\ModuleController;
 use App\HTTP\Controllers\CourseController;
 use App\HTTP\Controllers\LessonController;
+use App\HTTP\Controllers\QuestionController;
+use App\HTTP\Controllers\FoundationController;
 use App\Models\Module;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -66,11 +68,13 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/getting-started/multiple-choice/review/{id}/review-detail',function(){
   return View::make('pages.mcqs.detail');
 });
-
 Route::get('/sample',function(){
   
   return View::make('pages.foundation.index');
 });
   // Route::get('/theory/{id}', [ModuleController::class,'chapters'])->name('chapters');
 Route::get('/getting-started/{chapter_id}/{lesson_id}', [LessonController::class,'lessons'])->name('lessons.show');
+Route::post('/getting-started/append-answer', [QuestionController::class,'append_answer'])->name('append-answer');
+Route::post('/foundation-answer', [FoundationController::class,'store'])->name('append-foundation');
+
 });

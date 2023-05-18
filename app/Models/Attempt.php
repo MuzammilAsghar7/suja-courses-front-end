@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Attempt extends Model
 {
-    protected $fillable = ['user_id','module_id','chapter_id','lesson_id','question_id'];
+    protected $fillable = ['user_id','module_id','chapter_id','lesson_id','question_id','qoption_id','answer','reference'];
     use HasFactory;
 }
