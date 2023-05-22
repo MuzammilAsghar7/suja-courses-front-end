@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Arr;
 
 class module extends Model
 {
@@ -22,6 +22,19 @@ class module extends Model
     public function chapters_with_lesson()
     {
         $chapters = $this->hasMany(chapter::class);
-        return $chapters->whereHas('lessons');
+        return $chapters->whereHas('lessons_with_question');
+    }
+
+    public function questions_id(){
+        
+        $lessons = $this->chapters_with_lesson;
+        $collection = [];
+        foreach($lessons as $key => $lesson){
+            $collection[] = $lesson->questions;
+        }
+
+        $singleArray = Arr::flatten($collection);
+
+        return $singleArray;
     }
 }

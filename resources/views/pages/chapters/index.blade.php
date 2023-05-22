@@ -11,7 +11,7 @@
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div class="text-center">
           <div class="progress-chart -center incomplete">
-            <span class="progress-chart__text">80/80</span>
+            <span class="progress-chart__text">{{count(auth()->user()->questions_ids())}}/80 {{count($course->questions_id())}}</span>
           </div>
           <!-- /.progress-chart -->
         </div>
@@ -43,6 +43,11 @@
                         <div class="col-lg-2">
                             <i class="page-list__icon fa {{$chapter->icon}}"></i>
                         </div>
+                       
+                        @php
+                            $commonElements = array_intersect($chapter->questions_id(), auth()->user()->questions_ids());
+                            $count = count($commonElements);
+                        @endphp
                         
                         <div class="col-lg-10">
                             <div class="pro_text_box d-flex justify-content-between align-items-center">
@@ -50,8 +55,8 @@
                                     <span class="page-list__title">{{$chapter->title}}</span>
                                     <p class="page-list__text">Welcome to iCourse</p>
                                 </div>
-                                <div class="progress-chart incomplete">
-                                    <span class="progress-chart__text">0/{{$chapter->lessons_count}}</span>
+                                <div class="progress-chart {{ ($count == count($chapter->questions_id())) ? 'complete' : 'incomplete' }} ">
+                                    <span class="progress-chart__text">{{$count}}/{{count($chapter->questions_id())}}</span>
                                 </div>                 
                             </div>                       
                         </div>

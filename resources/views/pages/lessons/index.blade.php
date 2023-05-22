@@ -113,6 +113,7 @@
        @php 
          $ques = $chapter['lesson']->questions[0];
        @endphp
+       
         <div class="container">
 
             <div class="row">
@@ -203,7 +204,6 @@
     $chapter_id = $chapter->id; 
     $lesson_id = $chapter['lesson']->id; 
   @endphp
-
  <section>
   <div class="container">
     <div class="row">
@@ -211,15 +211,10 @@
         <div class="page-block video  block-1 ">
           <h2 class="u-block t-bold u-mt1 u-mb1">{{ $chapter['lesson']->title}}</h2>
           <div class="embed-responsive embed-responsive-16by9 ">
-            <video class="embed-responsive-item video w-100" controlslist="nodownload" data-id="267992569" data-title="The foundation for your new career" data-source="
-https://player.vimeo.com/external/267992569.sd.mp4?s=49d1618383afccfce3cf5908c9b4ea686b5ffd7c&amp;profile_id=164
 
-" poster="/assets/img/video-poster.jpg" controls="controls">
-              <source src="
-
-https://player.vimeo.com/external/267992569.sd.mp4?s=49d1618383afccfce3cf5908c9b4ea686b5ffd7c&amp;profile_id=164
-
-" type="video/mp4">
+            <video class="embed-responsive-item video w-100" controlslist="nodownload" data-id="267992569" data-title="The foundation for your new career" 
+            data-source="{{$chapter['lesson']->lessonimage}}" poster="/assets/img/video-poster.jpg" controls="controls">
+              <source src="{{$chapter['lesson']->lessonimage}}" type="video/mp4">
             </video>
           </div>
           <!-- /.embed-responsive -->

@@ -50,14 +50,44 @@ class LessonController extends Controller
                 ], 200);
         }
 
-        $lesson = Lesson::create([
-              'title' => $request->title,
-              'subtitle' => $request->excerpt,
-              'description' => $request->description,
-              'status' => $request->status,
-        ]);
+        try{
+            if($request->hasFile('file')){
+                $file = $request->file('file');
+                $file_name = time().'.'.$file->getClientOriginalName();
 
-        $lesson->chapter()->attach($request->chapter_id);
+                $lesson = Lesson::create([
+                    'title' => $request->title,
+                    'subtitle' => $request->excerpt,
+                    'description' => $request->description,
+                    'status' => $request->status,
+                ]);
+                $lesson->chapter()->attach($request->chapter_id);
+
+                $lesson->addMedia($file)->toMediaCollection('lesson_image');
+
+                return response()->json([
+                    'status' => 'success',
+                ], 200);
+            } 
+            else{
+                $lesson = Lesson::create([
+                    'title' => $request->title,
+                    'subtitle' => $request->excerpt,
+                    'description' => $request->description,
+                    'status' => $request->status,
+                ]);
+                $lesson->chapter()->attach($request->chapter_id);
+
+                return response()->json([
+                    'status' => 'success',
+                ], 200);
+            }
+        }
+        catch(Exception $e){
+            return response()->json([
+                'error' => $e->getMessage(),
+            ]);
+        }        
     }
 
     /**
@@ -78,7 +108,7 @@ class LessonController extends Controller
     public function lesson($id)
     {
         // return $id;
-        $lesson = Lesson::find($id)->first();
+        $lesson = Lesson::find($id);
         return response()->json(
             [
                 'status' => true,
@@ -100,10 +130,33 @@ class LessonController extends Controller
     public function update(Request $request, $id)
     {
         $lesson = Lesson::find($id);
-        $lesson->update($request->all());
+        try{
+            if($request->hasFile('file')){
+                $lesson->clearMediaCollection('lesson_image');
+                $file = $request->file('file');
+                $file_name = time().'.'.$file->getClientOriginalName();
 
-        $lessons = Lesson::find($id);
-        return $lessons;
+                $lesson->update($request->all());
+
+                $lesson->addMedia($file)->toMediaCollection('lesson_image');
+
+                return response()->json([
+                    'status' => 'success',
+                ], 200);
+            } 
+            else{
+                $lesson->update($request->all());
+
+                return response()->json([
+                    'status' => 'success',
+                ], 200);
+            }
+        }
+        catch(Exception $e){
+            return response()->json([
+                'error' => $e->getMessage(),
+            ]);
+        }   
     }
 
     /**
@@ -173,6 +226,15 @@ class LessonController extends Controller
             'question_id' => $request->question_id
         ]);
         return redirect()->back();
+    }
+
+    public function delete_media($id)
+    {
+        $lesson = Lesson::find($id);
+        $lesson->clearMediaCollection('lesson_image');
+        return response()->json([
+            'status' => 'delete',
+        ], 200);
     }
 
 }

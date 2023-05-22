@@ -43,7 +43,7 @@ Route::get('/questions', [QuestionController::class,'index']);
 
 Route::get('/lessons', [LessonController::class,'index']);
 Route::get('/lessons/{id}', [LessonController::class,'lesson']);
-Route::put('/lessons/{id}', [LessonController::class,'update']);
+Route::post('/lessons/{id}', [LessonController::class,'update']);
 Route::post('/add-lesson', [LessonController::class,'store']);
 
 Route::get('/questions', [QuestionController::class,'index']);
@@ -63,5 +63,8 @@ Route::post('/create-option', [ChapterController::class,'create_option']);
 Route::post('/delete-option', [ChapterController::class,'delete_option']);
 Route::get('/options', [ChapterController::class,'options']);
 Route::post('/page/mark-read', [LessonController::class,'markread']);
+
+
+Route::post('/delete-media-item/{id}', [LessonController::class,'delete_media']);
 
 

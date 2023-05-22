@@ -41,4 +41,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function questions_ids(){
+        return Attempt::where('user_id', $this->id)->pluck('question_id')->toArray();
+    }
 }

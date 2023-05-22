@@ -89,7 +89,6 @@ class ChapterController extends Controller
  
      public function create_course(Request $request)
      {  
-        
         $validator = Validator::make($request->all(), [
             'title' => 'required|max:100|unique:chapters',
             'module_id' => 'required',
@@ -105,15 +104,15 @@ class ChapterController extends Controller
                 ], 200);
         }
         
-         $course = Chapter::create([
+        $course = Chapter::create([
              'name' => $request->name,
              'title' => $request->title,
              'module_id' => $request->module_id,
              "icon" => $request->icon, 
              "subtitle" => $request->subtitle,
              "description" => $request->description,
-         ]);
-         return response()->json(['status'=>true,'course' => $course], 200);
+        ]);
+        return response()->json(['status'=>true,'course' => $course], 200);
     }
 
 
@@ -134,7 +133,6 @@ class ChapterController extends Controller
          $option = qoption::create([
              'title' => $request->title,
          ]);
-         
     }
 
     public function delete_option(Request $request)
