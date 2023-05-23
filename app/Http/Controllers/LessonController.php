@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\lesson;
-use App\Models\{ chapter,Attempt };
+use App\Models\{ chapter,Attempt, Module };
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorelessonRequest;
 use App\Http\Requests\UpdatelessonRequest;
@@ -77,7 +77,6 @@ class LessonController extends Controller
                     'status' => $request->status,
                 ]);
                 $lesson->chapter()->attach($request->chapter_id);
-
                 return response()->json([
                     'status' => 'success',
                 ], 200);
@@ -95,7 +94,6 @@ class LessonController extends Controller
      */
     public function show($id)
     {
-        // return $id;
         $chapter = Chapter::find($id);
         $lessons = $chapter->lessons()->withCount('questions')->get();
         return response()->json(
@@ -103,6 +101,62 @@ class LessonController extends Controller
                 'status' => true,
                 'data' => $lessons
             ], 200);
+    }
+
+    public function shown(Module $module, Chapter $chapter, Lesson $lesson)
+    {
+        $questions = $lesson->questions;
+        $lessons = $chapter->lessons;
+        $chapters = $module->chapters;
+        $modules = Module::all();
+
+        $next_lesson = $lessons->where('id', '>', $lesson->id)->first();
+        $next_chapter = $chapters->where('id', '>', $chapter->id)->first();
+        $next_module = $modules->where('id', '>', $module->id)->first();
+
+        if($next_lesson)
+        {
+            $module_id = $module->id;
+            $chapter_id = $chapter->id;
+            $lesson_id = $next_lesson->id;
+            $url = '/'.$module_id.'/'.$chapter_id.'/'.$lesson_id;
+            // dd($lesson->toArray());
+            return View('pages.lessons.index',['chapter'=> $chapter, 'module' => $module, 'lesson' => $lesson, 'questions' => $questions, 'next_page' => $url, 'next_name' => $next_lesson->title]);
+        }
+        else if($next_chapter)
+        {
+            $module_id = $module->id;
+            $chapter_id = $next_chapter->id;
+            $lesson_id = $next_chapter->lessons->first()->id;
+            $url = '/'.$module_id.'/'.$chapter_id.'/'.$lesson_id;
+            return View('pages.lessons.index',['chapter'=> $chapter, 'module' => $module, 'lesson' => $lesson, 'questions' => $questions, 'next_page' => $url, 'next_name' => $next_chapter->lessons->first()->title]);
+        }
+        else if($next_module)
+        {
+            $url = '/';
+            return View('pages.lessons.index',['chapter'=> $chapter, 'module' => $module, 'lesson' => $lesson, 'questions' => $questions, 'next_page' => $url, 'next_name' => 'Home']);
+        }
+        
+        // return $id;
+        // $chapter = Chapter::find($id);
+        // $lessons = $chapter->lessons()->withCount('questions')->get();
+        // return response()->json(
+        //     [
+        //         'status' => true,
+        //         'data' => $lessons
+        //     ], 200);
+    }
+    public function childshown(Module $module, Chapter $chapter, Lesson $parentlesson, Lesson $childlesson)
+    {
+        return $childlesson->questions;
+        // return $id;
+        // $chapter = Chapter::find($id);
+        // $lessons = $chapter->lessons()->withCount('questions')->get();
+        // return response()->json(
+        //     [
+        //         'status' => true,
+        //         'data' => $lessons
+        //     ], 200);
     }
 
     public function lesson($id)
@@ -178,7 +232,7 @@ class LessonController extends Controller
         $limit = 1; 
         $chapter = Chapter::where('id', $chapter_id)->whereHas('lessons')->first();
         $nextchapter = Chapter::select('id')->where('id', '>', $chapter_id)->whereHas('lessons')->first();
-
+        
         if($nextchapter){
             $nextchap_id = $nextchapter->id;
         } else{

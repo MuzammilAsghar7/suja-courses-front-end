@@ -50,8 +50,8 @@
 		                                    	<span class="page-list__title">{{$module->title}}</span>
 		                                    	<p class="page-list__text">{{$module->subtitle}}</p>
 	                                    	</div>
-	                                        <div class="progress-chart complete">
-	                                            <span class="progress-chart__text">80/80</span>
+	                                        <div class="progress-chart {{ count(auth()->user()->questions_ids()) == count($module->questions_id()) ? 'complete' : 'incomplete' }}">
+	                                            <span class="progress-chart__text">{{count(auth()->user()->questions_ids())}}/{{count($module->questions_id())}}</span>
 	                                        </div>                 
                                         </div>                       
                                     </div>
@@ -60,7 +60,7 @@
                         </div>
                     </div>
                 </div>
-            </section>
+              </section>
             @endforeach
 
         	 <section class="d-none">

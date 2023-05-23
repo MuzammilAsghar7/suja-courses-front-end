@@ -38,9 +38,11 @@ class ModuleController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Module $module)
     {
-        //
+        
+        $chapters = $module->chapters;
+        return View('pages.chapters.index',['chapters'=> $chapters, 'module' => $module]);
     }
 
     /**
@@ -81,7 +83,7 @@ class ModuleController extends Controller
 
         $course = Module::where('id', $id)
         ->withCount('chapters')
-        ->with(['chapters_with_lesson' => function ($query) {
+        ->with(['chapters' => function ($query) {
             $query->withCount('lessons');
         }])
         ->first();

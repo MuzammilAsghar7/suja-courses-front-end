@@ -30,12 +30,11 @@ class FoundationController extends Controller
      */
     public function store(Request $request)
     {
-
         $user_id = auth()->user()->id;
-        $chapter_id = $request->chapter_id;
-        $page_number = $request->page_number;
-        $next_chapter = $request->next_chapter;
-        $last_lesson = $request->last;
+        // $chapter_id = $request->chapter_id;
+        // $page_number = $request->page_number;
+        // $next_chapter = $request->next_chapter;
+        // $last_lesson = $request->last;
         if($user_id){
             Foundation::create([
                 'user_id' => $user_id,
@@ -44,17 +43,21 @@ class FoundationController extends Controller
                 'reference' => $request->reference,
                 'thoughts' => $request->thoughts,
             ]);
-            $name = Session('module_name');
-            if($next_chapter == 'finish'){
-                $url = "/$name/1    ";
-            }else
-            {
-              $url = "/$name/$chapter_id/$page_number";
-              if($last_lesson == 1){
-                $url = "/$name/${$chapter_id+1}/1";
-              }
-            }   
-            return redirect($url);
+            return response()->json(
+            [
+                'status' => true,
+            ], 200);
+            // $name = Session('module_name');
+            // if($next_chapter == 'finish'){
+            //     $url = "/$name/1    ";
+            // }else
+            // {
+            //   $url = "/$name/$chapter_id/$page_number";
+            //   if($last_lesson == 1){
+            //     $url = "/$name/${$chapter_id+1}/1";
+            //   }
+            // }   
+            // return redirect($url);
        }else{
             
        }

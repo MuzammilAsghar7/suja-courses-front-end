@@ -583,7 +583,7 @@
                 var chapter_id = $('.chapter_id').val();
                 var lesson_id = $('.lesson_id').val();
 
-                $('.append-answer').click(function () {
+                $(document).on('click', '.append-answer', function () {
                     var chosen_answer = $(this).data('answer');
                     var chosen_status = $(this).data('status');
                     var item = $(this);
@@ -630,7 +630,7 @@
                             },
                             success: function success(data) {
                                 console.log(data);
-                                var answer = data.answer;
+                                var answer = data.class;
 
                                 item.addClass(answer);
 

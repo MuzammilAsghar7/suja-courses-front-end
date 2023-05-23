@@ -1,17 +1,16 @@
 @extends('layouts.default')
 
 @section('content')
-
 <div class="page" style="padding-bottom: 50px;">
-@isset($course->chapters)
+@isset($chapters)
 
 <section class="u-pt0 py-5">
   <div class="container">
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div class="text-center">
-          <div class="progress-chart -center incomplete">
-            <span class="progress-chart__text">{{count(auth()->user()->questions_ids())}}/80 {{count($course->questions_id())}}</span>
+          <div class="progress-chart -center incomplete {{ count(auth()->user()->questions_ids()) == count($module->questions_id()) ? 'complete' : 'incomplete' }}">
+            <span class="progress-chart__text">{{count(auth()->user()->questions_ids())}}/{{count($module->questions_id())}}</span>
           </div>
           <!-- /.progress-chart -->
         </div>
@@ -33,12 +32,23 @@
   </div>
   <!-- /.container -->
 </section>
-@foreach($course->chapters_with_lesson as $chapter)
+
+@foreach($chapters as $chapter)
+@php
+if($lesson = $chapter->lessons->first())
+{
+  $lessonid = $lesson->id;
+}
+else
+{
+  $lessonid = 0;
+}
+@endphp
 <section>
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-7 mx-auto">
-                <a class="page-list__link" href="/getting-started/{{$chapter->id}}/1">
+                <a class="page-list__link" href="/{{$module->id}}/{{$chapter->id}}/{{$lessonid}}">
                     <div class="row align-items-center">
                         <div class="col-lg-2">
                             <i class="page-list__icon fa {{$chapter->icon}}"></i>

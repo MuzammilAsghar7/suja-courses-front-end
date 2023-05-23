@@ -10,8 +10,7 @@
 	// }
 ?>
 
-
-@if(isset($has_pagination)) 
+@if(Route::currentRouteName() == 'parentlessons')
 <div class="question-footer">
   <div class="container">
     <div class="row">
@@ -32,24 +31,11 @@
 		@endif
           <!-- <div class="next-button no-show"> -->
             <div class="text-right">
-				@if($lastnumner == 'last')
-					@if($nextchapter == 'finish')
-						<a class="started-back" href="/getting-started/1/">
-							<span class="desktop">Geeting Started</span>
+						<a class="started-back" href="{{ $next_page }}">
+							<span class="desktop">{{ $next_name }}</span>
 							<i class="fa fa-chevron-right"></i>
 						</a>
-					@else
-						<a class="started-back" href="/{{session('module_name')}}/{{$nextchapter}}/1">
-							<span class="desktop">Next Unit</span>
-							<i class="fa fa-chevron-right"></i>
-						</a>
-					@endif
-				@else
-					<a class="started-back" href="/{{session('module_name')}}/{{$chapter_id}}/{{$pagenumber}}">
-						<span class="desktop">Next </span>
-						<i class="fa fa-chevron-right"></i>
-					</a>
-				@endif
+					
             </div>
           </div>
         </div>
@@ -110,10 +96,13 @@
 <script src="{{asset('_assets/js/script.js')}}"></script>
 <script>
 angular.module('myApp', [])
-.controller('myController', function($scope) {
+.controller('myController', function($scope, $http) {
+	
     $scope.step = 0;
     $scope.name = 'Dummy User';
 	$scope.answer = {};
+	$scope.foundation = {};
+	$scope.token = document.querySelector('meta[name="csrf-token"]').content;
 	$scope.saveQuestion = function(limit) {
 		if($scope.step < limit-1){
 			++$scope.step;
@@ -126,7 +115,35 @@ angular.module('myApp', [])
 		if($scope.step < limit-1){
 			++$scope.step;
 		}
-    };  
+    }; 
+	$scope.stepDecrement = function(limit) {
+		console.log(limit);
+		if($scope.step > 0){
+			--$scope.step;
+		}
+    }; 
+	
+	$scope.foundationIncrement = function(limit, question_id) {
+		var req = {
+			method: 'POST',
+			url: '/foundation-answer',
+			data: { _token : $scope.token, answer: $scope.foundation.answer, reference: $scope.foundation.reference, question_id: question_id, limit: limit }
+		}
+		if($scope.foundation.answer && question_id){
+			$http(req).then(function successCallback(response){
+				if(response.data){
+					
+				}
+			}, 
+			function errorCallback(response){
+				console.log(error)
+			});
+		}
+		if($scope.step < limit-1){
+			++$scope.step;
+		}
+		$scope.foundation = {};
+    }; 
 });
 
 </script>

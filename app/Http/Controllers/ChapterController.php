@@ -7,6 +7,7 @@ use App\Models\qoption;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorechapterRequest;
 use App\Http\Requests\UpdatechapterRequest;
+use App\Models\Module;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -49,10 +50,11 @@ class ChapterController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(Module $module, Chapter $chapter)
     {
-        $chapter = Chapter::where('id',$id)->with('module')->first();
-        return response()->json($chapter, 200);
+        $lessons = $chapter->lessons;
+        return View('pages.lessons.index',['chapter'=> $chapter, 'module' => $module, 'lessons' => $lessons]);
+        
        
     }
 
@@ -90,7 +92,7 @@ class ChapterController extends Controller
      public function create_course(Request $request)
      {  
         $validator = Validator::make($request->all(), [
-            'title' => 'required|max:100|unique:chapters',
+            'title' => 'required|max:100',
             'module_id' => 'required',
             "subtitle" => 'required',
             "icon" => "required",

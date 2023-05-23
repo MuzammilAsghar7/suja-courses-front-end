@@ -26,15 +26,23 @@ class module extends Model
     }
 
     public function questions_id(){
-        
-        $lessons = $this->chapters_with_lesson;
+        // $lessons = '';
         $collection = [];
-        foreach($lessons as $key => $lesson){
-            $collection[] = $lesson->questions;
+        $chapters = $this->chapters_with_lesson;
+        
+        foreach($chapters as $chapter){
+            $lessons = $chapter->lessons;
+            foreach($lessons as $key => $lesson){
+                $collection[] = $lesson->questions->pluck('id');
+            }
         }
+        // return Arr::flatten($lessons);
+        //dd($lessons[0]->with('questions'));
+        // foreach($lessons as $key => $lesson){
+        //     $collection[] = $lesson->questions->pluck('id');
+        // }
 
         $singleArray = Arr::flatten($collection);
-
         return $singleArray;
     }
 }
