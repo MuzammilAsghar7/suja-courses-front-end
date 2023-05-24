@@ -31,7 +31,7 @@ class lesson extends Model implements HasMedia
     public function questions(){
         return $this->belongsToMany(question::class);
     }
-
+    
     public function getLessonimageAttribute()
     {
         //return $this->getMedia('lesson_image');

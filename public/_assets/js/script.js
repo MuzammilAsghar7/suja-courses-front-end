@@ -575,17 +575,17 @@
             var review_answers = $('.gs_append');
 
             if (review_answers.length) {
-                var question_id = $('.question_id').val();
                 // var score_id = $('.score_id').val();
                 // var answer_id = $('.answer_id').val();
                 // var unit_id = $('.unit_id').val();
-                var module_id = $('.module_id').val();
-                var chapter_id = $('.chapter_id').val();
-                var lesson_id = $('.lesson_id').val();
 
                 $(document).on('click', '.append-answer', function () {
                     var chosen_answer = $(this).data('answer');
                     var chosen_status = $(this).data('status');
+                    var question_id = $(this).data('question_id');
+                    var module_id = $(this).data('module_id');
+                    var chapter_id = $(this).data('chapter_id');
+                    var lesson_id = $(this).data('lesson_id');
                     var item = $(this);
 
                     if (item.hasClass('locked')) {

@@ -96,12 +96,13 @@
 <script src="{{asset('_assets/js/script.js')}}"></script>
 <script>
 angular.module('myApp', [])
-.controller('myController', function($scope, $http) {
-	
+.controller('myController', function($scope, $http,$timeout) {
     $scope.step = 0;
     $scope.name = 'Dummy User';
+	$scope.thoughts = [];
 	$scope.answer = {};
 	$scope.foundation = {};
+	$scope.loading = false;
 	$scope.token = document.querySelector('meta[name="csrf-token"]').content;
 	$scope.saveQuestion = function(limit) {
 		if($scope.step < limit-1){
@@ -112,12 +113,16 @@ angular.module('myApp', [])
 		}
     }; 
     $scope.stepIncrement = function(limit) {
+		$scope.loading = true;
 		if($scope.step < limit-1){
-			++$scope.step;
+			$timeout(() => {
+			  $scope.loading = false;
+			  loading = false;
+			  ++$scope.step; 
+			}, 300);
 		}
     }; 
 	$scope.stepDecrement = function(limit) {
-		console.log(limit);
 		if($scope.step > 0){
 			--$scope.step;
 		}
@@ -143,7 +148,34 @@ angular.module('myApp', [])
 			++$scope.step;
 		}
 		$scope.foundation = {};
-    }; 
+    };
+	$scope.saveThoughts = function(limit,question_id) {
+		$scope.loading = true;
+		if($scope.step < limit-1){
+			var req = {
+			method: 'POST',
+			url: '/foundation-answer',
+			data: { _token : $scope.token, thoughts : $scope.thoughts[$scope.step],question_id }
+		}
+		if($scope.thoughts[$scope.step]){
+			$http(req).then(function successCallback(response){
+				console.log(response);
+				// if(response.data){
+					
+				// }
+			}, 
+			function errorCallback(response){
+				console.log(error)
+			});
+		}
+
+			$timeout(() => {
+			  $scope.loading = false;
+			  loading = false;
+			  ++$scope.step; 
+			}, 300);
+		}
+    };  
 });
 
 </script>

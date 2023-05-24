@@ -105,6 +105,7 @@ class LessonController extends Controller
 
     public function shown(Module $module, Chapter $chapter, Lesson $lesson)
     {
+        // dd($chapter->toArray());
         $questions = $lesson->questions;
         $lessons = $chapter->lessons;
         $chapters = $module->chapters;
@@ -148,6 +149,7 @@ class LessonController extends Controller
     }
     public function childshown(Module $module, Chapter $chapter, Lesson $parentlesson, Lesson $childlesson)
     {
+
         return $childlesson->questions;
         // return $id;
         // $chapter = Chapter::find($id);

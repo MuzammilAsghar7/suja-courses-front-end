@@ -34,9 +34,6 @@ class question extends Model implements HasMedia
     public function checkuserAns($question_id)
     {
         $attempt = Attempt::where(['user_id'=> auth()->user()->id, 'question_id' => $question_id])->first();
-        echo '<h1>';
-        print_r($question_id);
-        echo '</h1>';
         if($attempt){
             return true;
         } else{

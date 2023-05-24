@@ -53,7 +53,7 @@ class ChapterController extends Controller
     public function show(Module $module, Chapter $chapter)
     {
         $lessons = $chapter->lessons;
-        return View('pages.lessons.index',['chapter'=> $chapter, 'module' => $module, 'lessons' => $lessons]);
+        return View('pages.chapters.index',['chapter'=> $chapter, 'module' => $module, 'lessons' => $lessons]);
         
        
     }

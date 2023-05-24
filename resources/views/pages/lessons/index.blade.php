@@ -5,12 +5,8 @@
   <section id="main" class="wrap">
     <div class="container">
       @foreach($lesson->questions as $key => $question)
-      <pre>
-      {{-- dd($lesson->toArray()) --}}
-</pre>
-      <div class="tab-{{ $question->id }}" >
-      {{$question->id}}
-        {{$question->qtype[0]->id}}
+    
+      <div class="tab-{{ $question->id }}" ng-if="step == {{$key}}">
       @if(isset($question->id))
         <input type="hidden" class="question_id" value="{{ $question->id }}">
         @endif
@@ -40,7 +36,6 @@
     @elseif($question->qtype[0]->id == 2)
       @include('includes.questions.refference')
     @elseif($question->qtype[0]->id == 3)
-   
       @include('includes.questions.mcqs')
     @elseif($question->qtype[0]->id == 4)
       @include('includes.questions.thoughts')

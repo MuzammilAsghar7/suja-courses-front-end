@@ -12,20 +12,19 @@
               $ans = false;
             }
           ?>
-          {{$question->id}}
           @if(isset($question->qoptions))
             @foreach($question->qoptions as $key => $option)
-            {{$option}}
-            {{$ans}}
-              <a href="#" for="answer_{{$key}}" data-answer="{{$option->id}}" data-status="{{$option->status}}" class="question-option append-answer {!! ($ans && $option->status == 1) ? 'selected correct' : '' !!}">
+              <a href="#" for="answer_{{$key}}" data-answer="{{$option->id}}" 
+              data-module_id = "{{$chapter->module_id}}"
+              data-chapter_id = "{{$chapter->id}}"
+              data-lesson_id = "{{$lesson->id}}"
+              data-status="{{$option->status}}" 
+              data-question_id = "{{$question->id}}"
+              class="question-option append-answer {!! ($ans && $option->status == 1) ? 'selected correct' : '' !!}">
                 <span class="question-option__text">{{$option->title}}</span>
               </a>
               <input type="radio" id="answer_{{$key}}" name="answer_{{$key}}" class="d-none" value="{{$option->id}}">
               <!-- class="question-option append-answer  selected  correct     locked "> -->
-              <input type="hidden" class="module_id" value="{{$chapter->module_id}}">
-              <input type="hidden" class="chapter_id" value="{{$chapter->id}}">
-              <input type="hidden" class="lesson_id" value="{{$lesson->id}}">
-              <input type="hidden" class="question_id" value="{{$question->id}}">
             @endforeach
           @endif
         </div>
@@ -48,7 +47,7 @@
               </div>
               @else
               <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                <a class="button -purple u-block" href="javascript:;" ng-click="stepIncrement({{count($lesson->questions)}})">Next Question <i class="fa fa-chevron-right"></i></a>
+                <a class="button -purple u-block" href="javascript:;" ng-click="stepIncrement({{count($lesson->questions)}})"><span ng-if="loading == true"> Loading... </span><span ng-if="loading == false">Next Question <i class="fa fa-chevron-right"></i></span></a>
               </div>
               @endif
             <!-- @ endif -->

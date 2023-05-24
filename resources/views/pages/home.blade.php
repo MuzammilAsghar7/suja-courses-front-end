@@ -38,7 +38,7 @@
                 <div class="container">
                     <div class="row align-items-center">
                         <div class="col-md-7 mx-auto">
-                            <a class="page-list__link" href="{{$module->name}}/{{$module->id}}">
+                            <a class="page-list__link" href="/{{$module->id}}">
                                 <div class="row align-items-center">
                                     <div class="col-lg-2">
                                         <i class="page-list__icon {{$module->icon}}"></i>
