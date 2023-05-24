@@ -55,6 +55,7 @@ Route::post('/add-question', [QuestionController::class,'store']);
 
 Route::post('/add-lesson', [LessonController::class,'store']);
 Route::post('/create-course', [ChapterController::class,'create_course']);
+Route::post('/update-course', [ChapterController::class,'update']);
 Route::post('/create-question', [QuestionController::class,'store']);
 
 Route::get('/chapters/{id}/lessons', [LessonController::class,'show']);

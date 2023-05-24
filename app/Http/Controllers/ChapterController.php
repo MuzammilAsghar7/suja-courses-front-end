@@ -69,9 +69,9 @@ class ChapterController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatechapterRequest $request, chapter $chapter)
+    public function update(Request $request, chapter $chapter)
     {
-        //
+        return '123';
     }
 
     /**
@@ -105,7 +105,8 @@ class ChapterController extends Controller
                     'error' => $validator->errors(),
                 ], 200);
         }
-        
+
+        /*
         $course = Chapter::create([
              'name' => $request->name,
              'title' => $request->title,
@@ -114,7 +115,34 @@ class ChapterController extends Controller
              "subtitle" => $request->subtitle,
              "description" => $request->description,
         ]);
+
+        $file = $request->file('file');
+        try{
+            if($request->hasFile('file')){
+                $course->clearMediaCollection('chapter_image');
+                $file = $request->file('file');
+                $file_name = time().'.'.$file->getClientOriginalName();
+
+                //$course->update($request->all());
+
+                $course->addMedia($file)->toMediaCollection('chapter_image');
+            } 
+            else{
+                $lesson->update($request->all());
+
+                return response()->json([
+                    'status' => 'success',
+                ], 200);
+            }
+        }
+        catch(Exception $e){
+            return response()->json([
+                'error' => $e->getMessage(),
+            ]);
+        } 
+
         return response()->json(['status'=>true,'course' => $course], 200);
+        */
     }
 
 
