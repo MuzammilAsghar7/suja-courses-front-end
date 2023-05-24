@@ -13,8 +13,8 @@ class lesson extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
     
-    protected $fillable = ['title','subtitle','description','status'];
-    protected $appends = array('lessonimage');
+    protected $fillable = ['title','subtitle','description','status', 'icon', 'parent'];
+    protected $appends = array('lessonimage', 'lessonname');
 
     public function registerMediaConversions(Media $media = null): void
     {
@@ -30,6 +30,11 @@ class lesson extends Model implements HasMedia
 
     public function questions(){
         return $this->belongsToMany(question::class);
+    }
+
+    public function getLessonnameAttribute(){
+        //return $this->parent;
+        return $this->where('id', $this->parent)->first();
     }
     
     public function getLessonimageAttribute()
