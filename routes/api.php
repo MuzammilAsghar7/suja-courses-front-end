@@ -45,6 +45,7 @@ Route::get('/lessons', [LessonController::class,'index']);
 Route::get('/lessons/{id}', [LessonController::class,'lesson']);
 Route::post('/lessons/{id}', [LessonController::class,'update']);
 Route::post('/add-lesson', [LessonController::class,'store']);
+Route::post('/add-innerlesson', [LessonController::class,'innerstore']);
 
 Route::get('/questions', [QuestionController::class,'index']);
 Route::get('/lesson_questions/{lesson_id}/{chapter_id}', [QuestionController::class,'lesson_questions']);

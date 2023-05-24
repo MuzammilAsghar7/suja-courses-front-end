@@ -88,7 +88,42 @@ class LessonController extends Controller
             ]);
         }        
     }
+    public function innerstore(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|max:200',
+            'chapter_id' => 'required',
+            'lessonId' => 'required',
+        ]);
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            return response()->json(
+            [
+                'status' => false,
+                'error' => $validator->errors(),
+            ], 200);
+        }
 
+        try{
+            $lesson = Lesson::create([
+                'title' => $request->title,
+                'subtitle' => $request->excerpt,
+                'description' => $request->description,
+                'parent' => $request->lessonId,
+                'icon' => $request->icon['name'],
+            ]);
+            $lesson->chapter()->attach($request->chapter_id);
+            return response()->json([
+                'status' => 'success',
+            ], 200);
+        }
+        catch(Exception $e){
+            return response()->json([
+                'error' => $e->getMessage(),
+            ]);
+        }
+    }
+    
     /**
      * Display the specified resource.
      */
@@ -105,7 +140,46 @@ class LessonController extends Controller
 
     public function shown(Module $module, Chapter $chapter, Lesson $lesson)
     {
+        if($lesson->multiple == 1){
+            $lessons = $chapter->lessons;
+            $chapters = $module->chapters;
+            $modules = Module::all();
+
+            $next_lesson = $lessons->where('id', '>', $lesson->id)->first();
+            $next_chapter = $chapters->where('id', '>', $chapter->id)->first();
+            $next_module = $modules->where('id', '>', $module->id)->first();
+
+            $innerlesson = lesson::where('parent', $lesson->id)->get();
+
+            if($next_lesson)
+            {
+                $module_id = $module->id;
+                $chapter_id = $chapter->id;
+                $lesson_id = $next_lesson->id;
+                $url = '/'.$module_id.'/'.$chapter_id.'/'.$lesson_id;
+                // dd($lesson->toArray());
+                return View('pages.lessons.index',['chapter'=> $chapter, 'module' => $module, 'lesson' => $lesson, 'innerlesson' => $innerlesson, 'next_page' => $url, 'next_name' => $next_lesson->title]);
+            }
+            else if($next_chapter)
+            {
+                $module_id = $module->id;
+                $chapter_id = $next_chapter->id;
+                $lesson_id = $next_chapter->lessons->first()->id;
+                $url = '/'.$module_id.'/'.$chapter_id.'/'.$lesson_id;
+                return View('pages.lessons.index',['chapter'=> $chapter, 'module' => $module, 'lesson' => $lesson, 'innerlesson' => $innerlesson, 'next_page' => $url, 'next_name' => $next_chapter->lessons->first()->title]);
+            }
+            else{
+                
+            }
+        }
         // dd($chapter->toArray());
+
+
+
+
+
+
+
         $questions = $lesson->questions;
         $lessons = $chapter->lessons;
         $chapters = $module->chapters;

@@ -42,7 +42,6 @@
 @endisset
 
 
-
 @isset($chapters)
 <section class="u-pt0 py-5">
   <div class="container">
