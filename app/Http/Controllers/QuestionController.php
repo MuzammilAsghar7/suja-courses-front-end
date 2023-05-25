@@ -42,18 +42,21 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
+        return 123;
         $validator = Validator::make($request->all(), [
             'title' => 'required|max:300',
             'type' => 'required', 
         ]);
         if ($validator->fails()) {
-             $errors = ValidationHelper::getValidationErrors($validator->errors());
+            $errors = ValidationHelper::getValidationErrors($validator->errors());
             return response()->json(
                 [
                     'status' => false,
                     'errors' => $errors
                 ], 200);
         }
+
+        return $request->type;
         
          $qustion = question::create([
              'title' => $request->title,
@@ -64,16 +67,16 @@ class QuestionController extends Controller
          $qustion->lesson()->attach($request->lesson_id);
          $qustion->qtype()->attach($request->type);
 
-        if(isset($request['mcqs'])){
-            foreach($request['mcqs'] as $mcq){
-                $options = [
-                    'question_id' => $qustion->id,
-                    'title' => $mcq['answerOption'],
-                    "status" => $mcq['status'],
-                ];
-                qoption::updateOrCreate($options,['id'=>$mcq['optionId']]);
-            }
-        }
+        // if(isset($request['mcqs']) && $request->type == 3){
+        //     foreach($request['mcqs'] as $mcq){
+        //         $options = [
+        //             'question_id' => $qustion->id,
+        //             'title' => $mcq['answerOption'],
+        //             "status" => $mcq['status'],
+        //         ];
+        //         qoption::updateOrCreate($options,['id'=>$mcq['optionId']]);
+        //     }
+        // }
         
         
          return response()->json(['status'=>true,'question' => $qustion], 200);
