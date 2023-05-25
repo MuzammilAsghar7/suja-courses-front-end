@@ -7,13 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Image\Manipulations;
+use Illuminate\Support\Arr;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class lesson extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
     
-    protected $fillable = ['title','subtitle','description','status', 'icon', 'parent'];
+    protected $fillable = ['title','subtitle','description','status', 'icon', 'parent','multiple'];
     protected $appends = array('lessonimage', 'lessonname');
 
     public function registerMediaConversions(Media $media = null): void
@@ -28,18 +29,38 @@ class lesson extends Model implements HasMedia
         return $this->belongsToMany(chapter::class);
     }
 
+    public function children() {
+        return $this->hasMany($this,'parent');
+    }
+    public function children_question_ids(){
+        $lessons = $this->children;
+        $collection = [];
+        foreach($lessons as $key => $lesson){
+            $collection[] = $lesson->questions->pluck('id');
+        }
+        $singleArray = Arr::flatten($collection);
+        return $singleArray;
+    }
+    public function parent() {
+        return $this->belongsTo($this,'parent');
+    }
     public function questions(){
         return $this->belongsToMany(question::class);
     }
 
+    public function questionscount(){
+        return $this->questions()->count();
+    }
+    public function questionsattempcount(){
+        return Attempt::where(['user_id' => auth()->user()->id,'lesson_id'=> $this->id])->count();
+    }
+
     public function getLessonnameAttribute(){
-        //return $this->parent;
         return $this->where('id', $this->parent)->first();
     }
     
     public function getLessonimageAttribute()
     {
-        //return $this->getMedia('lesson_image');
         $media = $this->getMedia('lesson_image');
         if($media->count() > 0)
         {

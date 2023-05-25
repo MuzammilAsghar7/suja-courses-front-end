@@ -6,7 +6,7 @@
         <section id="main" class="wrap">
           <div class="container">
             @foreach($lesson->questions as $key => $question)
-              <div class="tab-{{ $question->id }}" ng-if="step == {{$key}}">
+              <div class="tab-{{ $question->id }}"  ng-if="step == {{$key}}">
                 @if(isset($question->id))
                   <input type="hidden" class="question_id" value="{{ $question->id }}">
                 @endif
@@ -42,6 +42,9 @@
       @endif
     </div>
   @elseif(isset($innerlesson))
+  @php
+  $children_question_ids = $lesson->children_question_ids();
+  @endphp
     <div class="page getting-started">
       <section id="main" class="wrap">
         <div class="container">

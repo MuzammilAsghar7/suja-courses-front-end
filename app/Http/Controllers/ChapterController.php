@@ -106,43 +106,37 @@ class ChapterController extends Controller
                 ], 200);
         }
 
-        /*
+        $parent = 0;
+        if(isset($request->parent)){
+            if($request->parent == true){
+                $parent = 1;
+            }   
+        }
+
         $course = Chapter::create([
-             'name' => $request->name,
-             'title' => $request->title,
-             'module_id' => $request->module_id,
-             "icon" => $request->icon, 
-             "subtitle" => $request->subtitle,
-             "description" => $request->description,
+            'name' => $request->name,
+            'title' => $request->title,
+            'module_id' => $request->module_id,
+            "icon" => $request->icon, 
+            "subtitle" => $request->subtitle,
+            "description" => $request->description,
+            "parent" => $parent,
         ]);
 
         $file = $request->file('file');
         try{
             if($request->hasFile('file')){
-                $course->clearMediaCollection('chapter_image');
                 $file = $request->file('file');
                 $file_name = time().'.'.$file->getClientOriginalName();
-
-                //$course->update($request->all());
-
                 $course->addMedia($file)->toMediaCollection('chapter_image');
             } 
-            else{
-                $lesson->update($request->all());
-
-                return response()->json([
-                    'status' => 'success',
-                ], 200);
-            }
         }
         catch(Exception $e){
             return response()->json([
                 'error' => $e->getMessage(),
             ]);
         } 
-
         return response()->json(['status'=>true,'course' => $course], 200);
-        */
     }
 
 

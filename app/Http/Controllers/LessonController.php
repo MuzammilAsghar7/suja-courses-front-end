@@ -50,6 +50,17 @@ class LessonController extends Controller
                 ], 200);
         }
 
+        $multiple = 0;
+        $icon = null;
+        if(isset($request->multiple)){
+            if($request->multiple == true){
+                $multiple = 1;
+            }
+        }
+        if(isset($request->icon)){
+            $icon = $request->icon['name'];
+        }
+
         try{
             if($request->hasFile('file')){
                 $file = $request->file('file');
@@ -60,6 +71,8 @@ class LessonController extends Controller
                     'subtitle' => $request->excerpt,
                     'description' => $request->description,
                     'status' => $request->status,
+                    'multiple' => $multiple,
+                    'icon' => $icon,
                 ]);
                 $lesson->chapter()->attach($request->chapter_id);
 
@@ -75,6 +88,8 @@ class LessonController extends Controller
                     'subtitle' => $request->excerpt,
                     'description' => $request->description,
                     'status' => $request->status,
+                    'multiple' => $multiple,
+                    'icon' => $icon,
                 ]);
                 $lesson->chapter()->attach($request->chapter_id);
                 return response()->json([
@@ -140,6 +155,7 @@ class LessonController extends Controller
 
     public function shown(Module $module, Chapter $chapter, Lesson $lesson)
     {
+       
         if($lesson->multiple == 1){
             $lessons = $chapter->lessons;
             $chapters = $module->chapters;
@@ -172,23 +188,18 @@ class LessonController extends Controller
                 
             }
         }
-        // dd($chapter->toArray());
-
-
-
-
-
-
+        
 
         $questions = $lesson->questions;
         $lessons = $chapter->lessons;
         $chapters = $module->chapters;
         $modules = Module::all();
 
+        
         $next_lesson = $lessons->where('id', '>', $lesson->id)->first();
         $next_chapter = $chapters->where('id', '>', $chapter->id)->first();
         $next_module = $modules->where('id', '>', $module->id)->first();
-
+       
         if($next_lesson)
         {
             $module_id = $module->id;
@@ -208,6 +219,10 @@ class LessonController extends Controller
         }
         else if($next_module)
         {
+            $url = '/';
+            return View('pages.lessons.index',['chapter'=> $chapter, 'module' => $module, 'lesson' => $lesson, 'questions' => $questions, 'next_page' => $url, 'next_name' => 'Home']);
+        }
+        else{
             $url = '/';
             return View('pages.lessons.index',['chapter'=> $chapter, 'module' => $module, 'lesson' => $lesson, 'questions' => $questions, 'next_page' => $url, 'next_name' => 'Home']);
         }
