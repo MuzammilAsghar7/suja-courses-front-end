@@ -7,6 +7,7 @@ use App\HTTP\Controllers\ChapterController;
 use App\HTTP\Controllers\AuthController;
 use App\HTTP\Controllers\ModuleController;
 use App\HTTP\Controllers\QuestionController;
+use App\HTTP\Controllers\UserController;
 use App\HTTP\Controllers\LessonController;
 use App\HTTP\Controllers\ConfigController;
 
@@ -39,6 +40,7 @@ Route::get('/config',[ConfigController::class,'index']);
 Route::get('/modules',[ModuleController::class,'get_modules']);
 Route::get('/chapters', [ChapterController::class,'index']);
 Route::get('/questions', [QuestionController::class,'index']);
+Route::get('/users', [UserController::class,'index']);
 // Route::get('/questions/{id}', [QuestionController::class,'show']);
 
 Route::get('/lessons', [LessonController::class,'index']);
@@ -58,6 +60,8 @@ Route::post('/add-lesson', [LessonController::class,'store']);
 Route::post('/create-course', [ChapterController::class,'create_course']);
 Route::post('/update-course', [ChapterController::class,'update']);
 Route::post('/create-question', [QuestionController::class,'store']);
+Route::post('/add-user', [AuthController::class,'register']);
+
 
 Route::get('/chapters/{id}/lessons', [LessonController::class,'show']);
 
@@ -65,7 +69,6 @@ Route::post('/create-option', [ChapterController::class,'create_option']);
 Route::post('/delete-option', [ChapterController::class,'delete_option']);
 Route::get('/options', [ChapterController::class,'options']);
 Route::post('/page/mark-read', [LessonController::class,'markread']);
-
 
 Route::post('/delete-media-item/{id}', [LessonController::class,'delete_media']);
 
