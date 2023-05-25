@@ -3,6 +3,7 @@
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
           <div class="page-block video  block-1 ">
+            {{ $lesson }}
             <h2 class="u-block t-bold u-mt1 u-mb1">{{ $lesson->title}}</h2>
             <div class="embed-responsive embed-responsive-16by9 ">
               <video class="embed-responsive-item video w-100" controlslist="nodownload" data-id="267992569" data-title="The foundation for your new career" 

@@ -15,7 +15,7 @@
                 @endif
                     <div class="col-md-7 mx-auto">
                         <div class="progress-chart -center incomplete">
-                            <span class="progress-chart__text">0/0</span>
+                            <span class="progress-chart__text">{{count(auth()->user()->questions_ids())}}/{{count(auth()->user()->all_questions())}}</span>
                         </div>
                     </div>
                   </div>
@@ -34,6 +34,10 @@
         <div class="page">
         	
           @foreach($modules as $module)
+            @php
+                $questions_ids = $module->questions_id();
+                $commonElements = array_intersect($questions_ids, auth()->user()->questions_ids());
+            @endphp
         	 <section>
                 <div class="container">
                     <div class="row align-items-center">
@@ -51,8 +55,8 @@
 		                                    	<p class="page-list__text">{{$module->subtitle}}</p>
 	                                    	</div>
 	                                        <div class="progress-chart {{ count(auth()->user()->questions_ids()) == count($module->questions_id()) ? 'complete' : 'incomplete' }}">
-	                                            <span class="progress-chart__text">{{count(auth()->user()->questions_ids())}}/{{count($module->questions_id())}}</span>
-	                                        </div>                 
+	                                            <span class="progress-chart__text">{{count($commonElements)}}/{{count($questions_ids)}}</span>
+	                                        </div>             
                                         </div>                       
                                     </div>
                                 </div>

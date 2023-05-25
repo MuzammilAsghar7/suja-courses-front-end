@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use Illuminate\Support\Arr;
 
 class User extends Authenticatable
 {
@@ -44,5 +45,31 @@ class User extends Authenticatable
 
     public function questions_ids(){
         return Attempt::where('user_id', $this->id)->pluck('question_id')->toArray();
+    }
+
+    public function all_questions(){
+        $modules = module::get();
+        $collection = [];
+        foreach($modules as $module){
+            $chapters = $module->chapters_with_lesson;
+            foreach($chapters as $chapter){
+                $lessons = $chapter->lessons;
+                foreach($lessons as $key => $lesson){
+                    $childrens = $lesson->children;
+                    if(count($childrens) > 0)
+                    {
+                        foreach($childrens as $key => $children){
+                            //$collection[] = $children->questions->pluck('id');
+                        }
+                    }
+                    else
+                    {
+                        $collection[] = $lesson->questions->pluck('id');
+                    }
+                }
+            }
+        }
+        $singleArray = Arr::flatten($collection);
+        return $singleArray;
     }
 }

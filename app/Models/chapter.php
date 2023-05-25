@@ -63,4 +63,18 @@ class chapter extends Model implements HasMedia
 
         return $singleArray;
     }
+    public function children_question_ids(){
+        
+        $lessons = $this->lessons;
+        $collection = [];
+        foreach($lessons as $key => $lesson){
+            $childrens = $lesson->children;
+            foreach($childrens as $key => $children){
+                $collection[] = $children->questions->pluck('id');
+            }
+        }
+        $singleArray = Arr::flatten($collection);
+        return $singleArray;
+    }
+
 }

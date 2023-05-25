@@ -45,4 +45,20 @@ class module extends Model
         $singleArray = Arr::flatten($collection);
         return $singleArray;
     }
+    public function children_question_ids(){
+        
+        $chapters = $this->chapters_with_lesson;
+        $collection = [];
+        foreach($chapters as $chapter){
+            $lessons = $chapter->lessons;
+            foreach($lessons as $key => $lesson){
+                $childrens = $lesson->children;
+                foreach($childrens as $key => $children){
+                    $collection[] = $children->questions->pluck('id');
+                }
+            }
+        }
+        $singleArray = Arr::flatten($collection);
+        return $singleArray;
+    }
 }

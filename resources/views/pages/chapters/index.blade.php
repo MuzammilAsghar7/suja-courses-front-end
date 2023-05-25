@@ -3,14 +3,23 @@
 @section('content')
 <div class="page" style="padding-bottom: 50px;">
 @isset($lessons)
+    @php
+      $children_question_ids = $chapter->children_question_ids();
+      $children_question_count = count($children_question_ids);
+      $question_attemp = array_intersect($children_question_ids, auth()->user()->questions_ids());
+      $question_attemp_count = count($question_attemp);
+    @endphp
+    <div class="container">
     <div class="row">
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 py-5">
         <div class="text-center">
-          <div class="progress-chart -center incomplete">
-            <span class="progress-chart__text">1/2 </span>
+          <div class="progress-chart -center {{ ($question_attemp_count == $children_question_count) ? 'complete' : 'incomplete' }}">
+            <span class="progress-chart__text">{{ $question_attemp_count }}/{{ $children_question_count }} </span>
           </div>
-        </div>
+          <span class="reporting__text -success u-block u-mt1 mt-4">Well done. Please contact Support for advice on your next steps.</span>
+        </div> 
       </div>
+     </div>
     </div>
   @if(isset($chapter->chapter_image))
   <section>
@@ -65,14 +74,17 @@
 
 
 @isset($chapters)
-asd
+@php
+  $questions_ids = $module->questions_id();
+  $commonElements = array_intersect($questions_ids, auth()->user()->questions_ids());
+@endphp
 <section class="u-pt0 py-5">
   <div class="container">
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div class="text-center">
           <div class="progress-chart -center incomplete {{ count(auth()->user()->questions_ids()) == count($module->questions_id()) ? 'complete' : 'incomplete' }}">
-            <span class="progress-chart__text">{{count(auth()->user()->questions_ids())}}/{{count($module->questions_id())}}</span>
+            <span class="progress-chart__text">{{count($commonElements)}}/{{count($questions_ids)}}</span>
           </div>
           <!-- /.progress-chart -->
         </div>

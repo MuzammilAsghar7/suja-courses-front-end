@@ -113,18 +113,37 @@
         </div>
     </div>
     <section class="section-header">
-        <div class="container">
+        <div class="container" style="max-width: 1140px;">
+           @if(Route::currentRouteName() == 'chapters')
+            <div class="row py-2">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="text-center">
+                        @isset($lessons)
+                        <span class="t-bold score-number average-score u-block text-white">{{ $lessons->count() }}</span>
+                        <span class="score-text t-light-grey text-white">Units Complete</span>
+                        @endisset
+                    </div><!-- /.text-center -->
+                </div><!-- /.col-lg-4 -->
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="text-center">
+                        <span class="t-bold score-number average-score u-block text-white">{{ $question_attemp_count }} / {{$children_question_count}}</span>
+                        <span class="score-text t-light-grey text-white">Total Score</span>
+                    </div><!-- /.text-center -->
+                </div><!-- /.col-lg-4 -->
+            </div>
+            @else
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="company-logo text-center">
                        <a href="/">
-                        <img src="{{asset('_assets/img/logo.png')}}">
+                            <img src="{{asset('_assets/img/logo.png')}}">
                        </a>
                     </div>
                     <!-- <div class="company-brand -brand-1"></div> -->
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
+            @endif
             <!-- /.row -->
         </div>
         <!-- /.container -->
