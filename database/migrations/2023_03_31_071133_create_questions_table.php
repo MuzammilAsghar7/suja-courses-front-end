@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->longText('title');
             $table->longText('content')->nullable();
+            $table->boolean('allow_description')->default(0);
             $table->integer('status')->default(1);
             $table->timestamps();
         });

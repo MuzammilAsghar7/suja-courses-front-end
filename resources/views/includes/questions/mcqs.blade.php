@@ -32,15 +32,18 @@
       </div>
       <div class="row u-mt2">
         <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-          @if(!$loop->first)
-            <a class="button -purple u-block" href="javascript:;" ng-click="stepDecrement({{count($lesson->questions)}})">
-            <i class="fa fa-chevron-left"></i> Previous Question</a>
+          @if(isset($loop))
+            @if(!$loop->first)
+              <a class="button -purple u-block" href="javascript:;" ng-click="stepDecrement({{count($lesson->questions)}})">
+              <i class="fa fa-chevron-left"></i> Previous Question</a>
+            @endif
           @endif
         </div>
         <!-- /.col-lg-4 -->
         <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
           <a class="button -purple u-block" href="https://my-adi-course.co.uk/getting-started/multiple-choice/review-best">Back To Review</a>
         </div>
+            @if(isset($loop))
               @if($loop->last)
               <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                 <a class="button -purple u-block" href="{{$next_page}}">Next Topic <i class="fa fa-chevron-right"></i></a>
@@ -50,6 +53,7 @@
                 <a class="button -purple u-block" href="javascript:;" ng-click="stepIncrement({{count($lesson->questions)}})"><span ng-if="loading == true"> Loading... </span><span ng-if="loading == false">Next Question <i class="fa fa-chevron-right"></i></span></a>
               </div>
               @endif
+            @endif
             <!-- @ endif -->
           <!-- @ else -->
           <!-- @ endif -->

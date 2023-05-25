@@ -42,6 +42,10 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
+        $allow_description = 0;
+        if(isset($request->allow_description)){
+            $allow_description = ($request->allow_description == 'true') ? 1 : 0;
+        }
         $validator = Validator::make($request->all(), [
             'title' => 'required|max:300',
             'type' => 'required', 
@@ -58,23 +62,40 @@ class QuestionController extends Controller
          $qustion = question::create([
              'title' => $request->title,
              "content" => $request->content,
+             'allow_description' => $allow_description
          ]);
          
 
          $qustion->lesson()->attach($request->lesson_id);
          $qustion->qtype()->attach($request->type);
 
-        if(isset($request['mcqs'])){
+        if(isset($request['mcqs']) && $request->type == 3){
             foreach($request['mcqs'] as $mcq){
+                $status = 0;
+                if(isset($mcq['status'])){
+                    $status = ($mcq['status'] == 'true') ? 1 : 0;
+                }
                 $options = [
                     'question_id' => $qustion->id,
                     'title' => $mcq['answerOption'],
-                    "status" => $mcq['status'],
+                    "status" => $status,
                 ];
-                qoption::updateOrCreate($options,['id'=>$mcq['optionId']]);
+                qoption::Create($options);
             }
         }
-        
+
+        try{
+            if($request->hasFile('file')){
+                $file = $request->file('file');
+                $file_name = time().'.'.$file->getClientOriginalName();
+                $qustion->addMedia($file)->toMediaCollection('question_image');
+            } 
+        }
+        catch(Exception $e){
+            return response()->json([
+                'error' => $e->getMessage(),
+            ]);
+        } 
         
          return response()->json(['status'=>true,'question' => $qustion], 200);
     }
@@ -108,6 +129,11 @@ class QuestionController extends Controller
      */
     public function edit($id,Request $request)
     {
+        $allow_description = 0;
+        if(isset($request->allow_description)){
+            $allow_description = ($request->allow_description == 'true') ? 1 : 0;
+        }
+
         $validator = Validator::make($request->all(), [
             'title' => 'required|max:100',
             'type' => 'required', 
@@ -125,17 +151,39 @@ class QuestionController extends Controller
         $update = Question::find($id);
         $update->title = $request['title'];
         $update->content = $request['content'];
+        $update->allow_description = $allow_description;
         
         if($update->save()){
+
+            try{
+                if($request->hasFile('file')){
+                    $update->clearMediaCollection('question_image');
+                    $file = $request->file('file');
+                    $file_name = time().'.'.$file->getClientOriginalName();
+                    $update->addMedia($file)->toMediaCollection('question_image');
+                } 
+            }
+            catch(Exception $e){
+                return response()->json([
+                    'error' => $e->getMessage(),
+                ]);
+            } 
+
             $update->lesson()->sync($request->lesson_id);
             $update->qtype()->sync($request->type);
 
             if(isset($request['mcqs'])){
                 foreach($request['mcqs'] as $mcq){
+                    
+                    $mcqStatus = 0;
+                    if(isset($mcq['status'])){
+                        $mcqStatus = ($mcq['status'] == 'true') ? 1 : 0;
+                    }
+
                     $options = [
                         'question_id' => $update->id,
                         'title' => $mcq['answerOption'],
-                        "status" => $mcq['status'],
+                        "status" => $mcqStatus,
                     ];
                     qoption::updateOrCreate($options,['id'=> $mcq['optionId']]);
                 }

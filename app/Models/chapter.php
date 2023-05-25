@@ -5,10 +5,37 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
-class chapter extends Model
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\Image\Manipulations;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+
+class chapter extends Model implements HasMedia
 {
-    use HasFactory;
-    protected $fillable = ['name','title','module_id','icon','subtitle','description'];
+    use HasFactory, InteractsWithMedia;
+
+    protected $fillable = ['name','title','module_id','icon','subtitle','description', 'parent'];
+    protected $appends = array('chapterimage');
+
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this
+            ->addMediaConversion('preview')
+            ->fit(Manipulations::FIT_CROP, 300, 300)
+            ->nonQueued();
+    }
+
+    public function getChapterimageAttribute()
+    {
+        $media = $this->getMedia('chapter_image');
+        if($media->count() > 0)
+        {
+            foreach ($media as $detail) {
+                return $detail->getUrl();
+            }
+        }
+    }
+
     public function module()
     {
         return $this->belongsTo(module::class,'module_id');

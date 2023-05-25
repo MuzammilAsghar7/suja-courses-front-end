@@ -9,11 +9,27 @@
                      <div class="form-group has-error">
                         <label class="control-label">{{ $question->title }}</label>
                         <span ng-bind="thoughts"></span>
-                        <textarea name="reflection_text" ng-model="thoughts[{{$key}}]" class="form-control form__input form__textarea reflection_text -open" placeholder="Your Thoughts" data-error="Please enter your thoughts" required=""></textarea>
+                        @if(isset($key))
+                           <textarea name="reflection_text" ng-model="thoughts[{{$key}}]" class="form-control form__input form__textarea reflection_text -open" placeholder="Your Thoughts" data-error="Please enter your thoughts" required=""></textarea>
+                        @else
+                           <textarea name="reflection_text" ng-model="thoughts[0]" class="form-control form__input form__textarea reflection_text -open" placeholder="Your Thoughts" data-error="Please enter your thoughts" required=""></textarea>
+                        @endif
                         <span class="glyphicon form-control-feedback glyphicon-remove" aria-hidden="true"></span>
                         
                         <div class="u-mt1">
-                           <button type="submit" ng-click="saveThoughts({{count($questions)}},{{$question->id}})" class="button -purple reflection-save disabled">Save</button>
+                           @if(isset($loop))
+                              @if($loop->last)
+                                 <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                    <a class="button -purple u-block" href="{{$next_page}}">Next Topic <i class="fa fa-chevron-right"></i></a>
+                                 </div>
+                              @else
+                                 <button type="submit" ng-click="saveThoughts({{count($questions)}},{{$question->id}})" class="button -purple reflection-save disabled">Save</button>
+                              @endif
+                           @else
+                              <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                 <a class="button -purple u-block" href="{{$next_page}}">Next Topic <i class="fa fa-chevron-right"></i></a>
+                              </div>
+                           @endif
                         </div>
                         <input name="reflection_section" type="hidden" class="unit_name" value="Getting Started">
                         <input name="unit_id" type="hidden" class="unit_id" value="999">
@@ -54,9 +70,9 @@
                
             </div>
          </div>
-   </div>
-   
-</div>
-     @endif
-    @endforeach
+      @endif
+   @endforeach
 @endif
+   </div>
+</div>
+    
