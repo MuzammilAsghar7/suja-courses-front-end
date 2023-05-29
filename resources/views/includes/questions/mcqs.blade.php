@@ -4,6 +4,9 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
           <h4 class="u-mb2">Question</h4>
           <h4 class="question u-mb2">{{ $question->title }}:</h4>
+           @if(isset($question->questionimage))
+             <img src="{{$question->questionimage}}" style="width: 180px;margin-bottom: 22px;">
+           @endif
           <h4 class="u-mb2">Answers</h4>
           <?php 
             if($question->checkuserAns($question->id)){

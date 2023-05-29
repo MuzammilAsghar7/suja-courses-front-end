@@ -15,6 +15,7 @@ class question extends Model implements HasMedia
 {
     use HasFactory,InteractsWithMedia;
     protected $fillable = ['title','content'];
+    protected $appends = array('questionimage');
     public function registerMediaConversions(Media $media = null): void
     {
         $this
@@ -49,6 +50,16 @@ class question extends Model implements HasMedia
         } else{
             return false;
         }
-    }    
+    }   
+    public function getQuestionimageAttribute()
+    {
+        $media = $this->getMedia('question_image');
+        if($media->count() > 0)
+        {
+            foreach ($media as $detail) {
+                return $detail->getUrl();
+            }
+        }
+    } 
 }
 

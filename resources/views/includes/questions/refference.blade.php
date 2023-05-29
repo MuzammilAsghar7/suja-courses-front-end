@@ -20,18 +20,26 @@
                 </div>
                 <div class="row u-mt2">
                   <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                   @if(isset($loop))
                    @if(!$loop->first)
                     <button type="button" class="foundation-save button -purple u-pt1 u-pb1 disabled" ng-click="stepDecrement({{count($lesson->questions)}})">Previous</button>
-                   @endif 
+                   @endif
+                   @endif
                   </div>
                  
                   <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-right">
+                     @if(isset($loop))
                       @if($loop->last)
                         <button type="button" ng-click="foundationIncrement({{count($lesson->questions)}},{{$question->id}})" style="margin-left: auto; display: table;" class="foundation-save button -purple u-pt1 u-pb1 disabled" data-question="0">
                           <a href="{{$next_page}}" class="text-white">Finish</a>
                         </button>
                       @else
                         <button type="button" style="margin-left: auto; display: table;" ng-click="foundationIncrement({{count($lesson->questions)}},{{$question->id}})" class="foundation-save button -purple u-pt1 u-pb1 disabled" data-question="0">Save</button>
+                      @endif
+                      @else
+                        <button type="button" ng-click="foundationIncrement({{count($lesson->questions)}},{{$question->id}})" style="margin-left: auto; display: table;" class="foundation-save button -purple u-pt1 u-pb1 disabled" data-question="0">
+                          <a href="{{$next_page}}" class="text-white">Finish</a>
+                        </button>
                       @endif
                   </div>
                   <input type="hidden" name="question_id" value="{{$question->id}}">

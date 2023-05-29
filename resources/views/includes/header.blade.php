@@ -67,16 +67,16 @@
                     <a href="/">Home</a>
                 </li>
                 <li>
-                    <a href="/getting-started/1">Getting Started</a>
+                    <a href="/1">Getting Started</a>
                 </li>
                 <li>
-                    <a href="#">Theory</a>
+                    <a href="/2">Theory</a>
                     <span class="nav-toggle-area">
                         <a href="#" class="nav-chevron" data-toggle="theory">
-                            <i class="chev fa fa-chevron-down" aria-hidden="true"></i>
+                            <i class="chev " aria-hidden="true"></i>
                         </a>
                     </span>
-                    <ul class="sub-nav theory">
+                    <!-- <ul class="sub-nav theory">
                         <li>
                             <a href="study.html">Study</a>
                         </li>
@@ -84,15 +84,15 @@
                             <a href="practice.html">Practise</a>
                         </li>
 
-                    </ul>
+                    </ul> -->
                 </li>
 
-                <li>
+                <!-- <li>
                     <a href="#" target="_blank">Driving</a>
                 </li>
                 <li>
                     <a href="#" target="_blank">Teaching</a>
-                </li>
+                </li> -->
 
                 <li>
                     <a href="mailto:demo@gmail.com">Contact Us</a>

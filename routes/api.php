@@ -31,8 +31,8 @@ Route::post('/auth/register', [AuthController::class, 'register']);
 Route::post('/auth/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:api')->group( function () {
-  
 });
+
 
 Route::get('/config',[ConfigController::class,'index']);
 
@@ -72,4 +72,7 @@ Route::post('/page/mark-read', [LessonController::class,'markread']);
 
 Route::post('/delete-media-item/{id}', [LessonController::class,'delete_media']);
 
+
+Route::delete('/questions/{id}', [QuestionController::class,'destroy']);
+Route::delete('/delete-question-media/{id}', [QuestionController::class,'delete']);
 

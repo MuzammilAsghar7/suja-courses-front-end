@@ -47,7 +47,7 @@
   @endphp
     <div class="page getting-started">
       <section id="main" class="wrap">
-        <div class="container">
+        <div class="">
           <div>
             @include('includes.innerlesson')
           </div>

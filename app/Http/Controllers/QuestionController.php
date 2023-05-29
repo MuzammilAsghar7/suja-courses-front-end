@@ -42,20 +42,22 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
+        $allow_description = 0;
+        if(isset($request->allow_description)){
+            $allow_description = ($request->allow_description == 'true') ? 1 : 0;
+        }
         $validator = Validator::make($request->all(), [
-            'title' => 'required|max:300',
+            'title' => 'required',
             'type' => 'required', 
         ]);
         if ($validator->fails()) {
-            $errors = ValidationHelper::getValidationErrors($validator->errors());
+             $errors = ValidationHelper::getValidationErrors($validator->errors());
             return response()->json(
                 [
                     'status' => false,
                     'errors' => $errors
                 ], 200);
         }
-
-        return $request->type;
         
          $qustion = question::create([
              'title' => $request->title,
@@ -67,20 +69,20 @@ class QuestionController extends Controller
          $qustion->lesson()->attach($request->lesson_id);
          $qustion->qtype()->attach($request->type);
 
-        // if(isset($request['mcqs']) && $request->type == 3 && $request->type == 3){
-        //     foreach($request['mcqs'] as $mcq){
+        if(isset($request['mcqs']) && $request->type == 3){
+            foreach($request['mcqs'] as $mcq){
                 $status = 0;
                 if(isset($mcq['status'])){
                     $status = ($mcq['status'] == 'true') ? 1 : 0;
                 }
-        //         $options = [
-        //             'question_id' => $qustion->id,
-        //             'title' => $mcq['answerOption'],
-        //             "status" => $status,
-        //         ];
-        //         qoption::Create($options);
-        //     }
-        // }
+                $options = [
+                    'question_id' => $qustion->id,
+                    'title' => $mcq['answerOption'],
+                    "status" => $status,
+                ];
+                qoption::Create($options);
+            }
+        }
 
         try{
             if($request->hasFile('file')){
@@ -203,9 +205,35 @@ class QuestionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(question $question)
+    public function destroy($id)
     {
-        //
+        $res=Question::where('id',$id)->delete();
+        if ($res)
+        {
+          $data=[ 'status'=>'1','msg'=>'success'];
+        }else
+        {
+          $data=['status'=>'0','msg'=>'fail'];
+        }
+        return response()->json($data);
+    }
+
+    public function delete($id)
+    {
+        $res=Question::find($id);
+        if ($res)
+        {
+          $deletemedia = $res->clearMediaCollection('question_image');
+          if($deletemedia){
+            $data=[ 'status'=>'1','msg'=>'success'];
+          } else{
+            $data=['status'=>'0','msg'=>'fail'];
+          }
+        }else
+        {
+          $data=['status'=>'0','msg'=>'fail'];
+        }
+        return response()->json($data);
     }
 
     public function append_answer(Request $request)

@@ -49,7 +49,7 @@
         <div class="container">
             <div class="row">
             	<div class="col-md-6 mx-auto">
-            		<div class="row">
+            		<div class="row justify-content-center">
 		                <div class="col-sm-3 col-md-3 col-lg-3">
 		                    <div class="text-center">
 		                        <a class="footer-icon" href="/">
@@ -60,13 +60,13 @@
 		                </div>
 		                <div class="col-sm-3 col-md-3 col-lg-3">
 		                    <div class="text-center">
-		                        <a class="footer-icon" href="/theory">
+		                        <a class="footer-icon" href="/2">
 		                            <span class="footer-icon__icon fa fa-leanpub"></span>
 		                            <span class="footer-icon__text t-white u-block text-uppercase">Theory</span>
 		                        </a>
 		                    </div>
 		                </div>
-		                <div class="col-sm-3 col-md-3 col-lg-3">
+		                <!-- <div class="col-sm-3 col-md-3 col-lg-3">
 		                    <div class="text-center">
 		                        <a class="footer-icon" href="#" target="_blank">
 		                            <span class="footer-icon__icon fa fa-car"></span>
@@ -81,7 +81,7 @@
 		                            <span class="footer-icon__text t-white u-block text-uppercase">Teaching</span>
 		                        </a>
 		                    </div>
-		                </div>
+		                </div> -->
                 	</div>
                 </div>
             </div>

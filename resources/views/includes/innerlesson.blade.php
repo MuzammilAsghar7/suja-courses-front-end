@@ -5,8 +5,9 @@
         $question_attempt = array_intersect($children_question_ids, auth()->user()->questions_ids());
         $question_attempt_count = count($question_attempt);
     @endphp
+    <div class="container">
     <div class="row">
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="col-xs-8 col-md-10 mx-auto">
         <div class="text-center">
           <div class="progress-chart -center  {{ ($question_attempt_count == $count_question) ? 'complete' : 'incomplete' }}">
             <span class="progress-chart__text">{{ $question_attempt_count }}/{{ $count_question }}</span>
@@ -14,9 +15,17 @@
         </div>
       </div>
     </div>
+</div>
+
+<div class="container">
+    <div class="row">
+      <div class="col-xs-8 col-md-10 mx-auto mt-4">
     @if(isset($innerlesson[0]->lessonname))
         {!! $innerlesson[0]->lessonname->description !!}
     @endif
+</div>
+</div>
+</div>
     @foreach($innerlesson as $lesson)
         <section>
             <div class="container">
